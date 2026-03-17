@@ -16,15 +16,15 @@
 
 <body class="bg-zinc-50 min-h-screen text-zinc-900 p-4 md:p-8">
 
-    <div class="max-w-5xl mx-auto" x-data="pedApp()" x-cloak>
+    <div class="max-w-[1600px] mx-auto" x-data="pedApp()" x-cloak>
         <header class="mb-8 text-center flex flex-col items-center">
             <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900">小兒發展里程碑快速評估</h1>
             <p class="text-zinc-500 mt-2">Pediatric Milestone Assessment Tool</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
             <!-- Left Panel -->
-            <div class="space-y-6">
+            <div class="xl:col-span-3 space-y-6">
                 <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
                     <h2 class="text-lg font-semibold mb-4 text-zinc-800 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,14 +81,14 @@
                             全部重置為未測
                         </button>
                     </div>
-                    <div class="space-y-8 max-h-[550px] overflow-y-auto pr-2">
+                    <div class="space-y-8 max-h-[75vh] overflow-y-auto pr-2">
                         <template x-for="(domainName, domainKey) in domainNames" :key="domainKey">
-                            <div class="space-y-3">
-                                <h3 class="font-bold text-zinc-900 border-b border-zinc-200 pb-2 text-lg flex items-center gap-2">
-                                    <span class="w-1.5 h-5 bg-zinc-800 rounded-full inline-block"></span>
+                            <div class="space-y-4">
+                                <h3 class="font-bold text-zinc-900 border-b border-zinc-200 pb-2 text-lg sm:text-xl flex items-center gap-2">
+                                    <span class="w-1.5 h-6 bg-zinc-800 rounded-full inline-block"></span>
                                     <span x-text="domainName"></span>
                                 </h3>
-                                <div class="bg-white rounded-xl p-3 sm:p-4 border border-zinc-200 shadow-sm">
+                                <div class="bg-white rounded-xl p-3 sm:p-5 border border-zinc-200 shadow-sm">
                                     <div class="space-y-3">
                                         <template x-for="age in ages" :key="age">
                                             <div class="border rounded-lg overflow-hidden transition-colors"
@@ -111,20 +111,20 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div x-show="isAccordionOpen(domainKey, age)" x-collapse class="p-2 sm:p-3 bg-white space-y-1.5 sm:space-y-2 border-t border-zinc-100">
+                                                <div x-show="isAccordionOpen(domainKey, age)" x-collapse class="p-3 sm:p-5 bg-zinc-50/50 space-y-3 sm:space-y-4 border-t border-zinc-100 rounded-b-lg">
                                                     <template x-for="(item, index) in milestoneData[age][domainKey]" :key="index">
-                                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-2 hover:bg-zinc-50 rounded-md transition-colors group">
-                                                            <span class="text-sm text-zinc-700 font-medium group-hover:text-zinc-900 transition-colors flex-1" x-text="item"></span>
-                                                            <div class="flex inline-flex rounded-md shadow-sm" role="group">
+                                                        <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 p-4 bg-white hover:bg-zinc-50 rounded-xl border border-zinc-200 shadow-sm transition-all group">
+                                                            <span class="text-[15px] sm:text-base text-zinc-700 font-medium group-hover:text-zinc-900 transition-colors flex-1" x-text="item"></span>
+                                                            <div class="flex inline-flex rounded-lg shadow-sm" role="group">
                                                                 <button @click="setTargetItem(domainKey, age, item, 'pass')"
-                                                                    class="px-3 sm:px-4 py-1.5 text-xs font-semibold rounded-l-md border border-zinc-200 transition-colors focus:z-10 focus:ring-1 focus:ring-zinc-800"
-                                                                    :class="assessments[domainKey][age][item] === 'pass' ? 'bg-zinc-800 text-white border-zinc-800 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">達標 (O)</button>
+                                                                    class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-l-md border border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                                    :class="assessments[domainKey][age][item] === 'pass' ? 'bg-zinc-800 text-white border-zinc-800 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">達標(O)</button>
                                                                 <button @click="setTargetItem(domainKey, age, item, 'nt')"
-                                                                    class="px-3 sm:px-4 py-1.5 text-xs font-semibold border-y border-zinc-200 transition-colors focus:z-10 focus:ring-1 focus:ring-zinc-800"
-                                                                    :class="assessments[domainKey][age][item] === 'nt' ? 'bg-zinc-100 text-zinc-400 border-zinc-200 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未測 (-)</button>
+                                                                    class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold border-y border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                                    :class="assessments[domainKey][age][item] === 'nt' ? 'bg-zinc-100 text-zinc-500 border-zinc-200 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未測(-)</button>
                                                                 <button @click="setTargetItem(domainKey, age, item, 'fail')"
-                                                                    class="px-3 sm:px-4 py-1.5 text-xs font-semibold rounded-r-md border border-zinc-200 transition-colors focus:z-10 focus:ring-1 focus:ring-zinc-800"
-                                                                    :class="assessments[domainKey][age][item] === 'fail' ? 'bg-white text-zinc-900 border-zinc-800 ring-1 ring-inset ring-zinc-800 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未達 (X)</button>
+                                                                    class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-r-md border border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                                    :class="assessments[domainKey][age][item] === 'fail' ? 'bg-rose-50 text-rose-700 border-rose-200 ring-1 ring-inset ring-rose-300 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未達(X)</button>
                                                             </div>
                                                         </div>
                                                     </template>
@@ -140,7 +140,7 @@
             </div>
 
             <!-- Right Panel -->
-            <div class="space-y-6">
+            <div class="xl:col-span-2 space-y-6">
                 <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
                     <div class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-100">
                         <h2 class="text-lg font-semibold text-zinc-800 flex items-center">
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                     <textarea x-model="objectiveText" @input="objectiveEdited = true"
-                        class="w-full bg-zinc-50 border border-zinc-300 rounded-lg p-4 font-mono text-sm text-zinc-700 whitespace-pre-wrap h-64 overflow-y-auto resize-y focus:outline-none focus:ring-2 focus:ring-zinc-800 focus:border-transparent"></textarea>
+                        class="w-full min-h-[280px] p-4 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 leading-relaxed resize-y focus:bg-white focus:ring-2 focus:ring-zinc-800 transition-colors outline-none"></textarea>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
@@ -200,7 +200,7 @@
                         </div>
                     </div>
                     <textarea x-model="summaryText" @input="summaryEdited = true"
-                        class="w-full bg-zinc-50 border border-zinc-300 rounded-lg p-4 text-sm text-zinc-800 whitespace-pre-wrap min-h-[160px] leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-zinc-800 focus:border-transparent"></textarea>
+                        class="w-full min-h-[280px] p-4 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 leading-relaxed resize-y focus:bg-white focus:ring-2 focus:ring-zinc-800 transition-colors outline-none"></textarea>
                     <div class="mt-3 text-right">
                         <span class="text-[11px] font-medium px-2 py-1 rounded"
                             :class="summaryText.length > 500 ? 'bg-red-50 text-red-600' : 'bg-transparent text-zinc-400'">
@@ -425,7 +425,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('pedApp', () => ({
                 ages: ["1", "1.5", "2", "2.5", "3", "4", "5"],
-                selectedAge: "2",
+                selectedAge: "1",
                 entryMethod: "自行走入診間",
                 emotionState: "情緒及專注力可",
 
@@ -439,7 +439,7 @@
                 assessments: {},
                 openAccordions: {},
 
-                previousAge: "2",
+                previousAge: "1",
                 
                 objectiveText: "",
                 summaryText: "",
@@ -786,9 +786,9 @@
                             if (passed.length > 0) line += '；';
                             const failedParts = failed.map((item) => {
                                 const customPhrase = failPhrases[item];
-                                return customPhrase ? `目前${customPhrase}` : `目前尚不會${item}`;
+                                return customPhrase ? customPhrase : `尚不會${item}`;
                             });
-                            line += failedParts.join('；');
+                            line += '目前' + failedParts.join('、');
                         }
                         line += '。';
                         return line;
