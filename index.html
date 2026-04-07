@@ -9,8 +9,14 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        [x-cloak] { display: none !important; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -39,7 +45,7 @@
                             <select x-model="selectedAge" @change="onAgeChange()"
                                 class="w-full rounded-md border-zinc-300 shadow-sm focus:border-zinc-800 focus:ring-zinc-800 bg-white p-2 border">
                                 <template x-for="age in ages" :key="age">
-                                    <option :value="age" x-text="age + ' 歲'"></option>
+                                    <option :value="age" x-text="ageLabel(age)"></option>
                                 </template>
                             </select>
                         </div>
@@ -69,7 +75,11 @@
                 <div class="flex justify-end">
                     <button @click="toggleAll()"
                         class="text-sm px-3 py-1.5 bg-white text-zinc-600 border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-rose-600 transition-colors flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
                         全部重置為未測
                     </button>
                 </div>
@@ -86,30 +96,56 @@
                         <div class="space-y-3">
                             <template x-for="age in ages" :key="age">
                                 <div class="border rounded-lg overflow-hidden transition-colors"
-                                     :class="age === selectedAge ? 'border-zinc-400 ring-1 ring-zinc-200' : 'border-zinc-200'">
+                                    :class="age === selectedAge ? 'border-zinc-400 ring-1 ring-zinc-200' : 'border-zinc-200'">
                                     <div class="px-3 py-2.5 text-left flex justify-between items-center transition-colors cursor-pointer"
-                                         :class="age === selectedAge ? 'bg-zinc-50' : 'bg-white hover:bg-zinc-50'"
-                                         @click.self="toggleAccordion(domainKey, age)">
+                                        :class="age === selectedAge ? 'bg-zinc-50' : 'bg-white hover:bg-zinc-50'"
+                                        @click.self="toggleAccordion(domainKey, age)">
                                         <div class="flex items-center gap-2 pointer-events-none">
-                                            <span class="text-sm font-semibold" :class="age === selectedAge ? 'text-zinc-900' : 'text-zinc-600'" x-text="age + ' 歲'"></span>
-                                            <span x-show="age === selectedAge" class="text-[10px] bg-zinc-800 text-white px-2 py-0.5 rounded-full font-medium tracking-wide">基準年齡</span>
+                                            <span class="text-sm font-semibold"
+                                                :class="age === selectedAge ? 'text-zinc-900' : 'text-zinc-600'"
+                                                x-text="ageLabel(age)"></span>
+                                            <span x-show="age === selectedAge"
+                                                class="text-[10px] bg-zinc-800 text-white px-2 py-0.5 rounded-full font-medium tracking-wide">基準年齡</span>
                                         </div>
                                         <div class="flex items-center gap-3">
-                                            <div class="flex gap-1 items-center" x-show="isAccordionOpen(domainKey, age)">
-                                                <button @click.stop="setTargetItemAll(domainKey, age, 'pass')" title="本頁全達標" class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(O)</button>
-                                                <button @click.stop="setTargetItemAll(domainKey, age, 'nt')" title="本頁全未測" class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(-)</button>
-                                                <button @click.stop="setTargetItemAll(domainKey, age, 'fail')" title="本頁全未達" class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(X)</button>
+                                            <div class="flex gap-1 items-center"
+                                                x-show="isAccordionOpen(domainKey, age)">
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'pass')"
+                                                    title="本頁全達標"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(O)</button>
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'nt')"
+                                                    title="本頁全未測"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(-)</button>
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'fail')"
+                                                    title="本頁全未達"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(X)</button>
                                             </div>
-                                            <button @click="toggleAccordion(domainKey, age)" class="p-1 hover:bg-black/5 rounded text-zinc-400">
-                                                <svg class="w-4 h-4 transition-transform duration-200" :class="isAccordionOpen(domainKey, age) ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            <button @click="toggleAccordion(domainKey, age)"
+                                                class="p-1 hover:bg-black/5 rounded text-zinc-400">
+                                                <svg class="w-4 h-4 transition-transform duration-200"
+                                                    :class="isAccordionOpen(domainKey, age) ? 'rotate-180' : ''"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
                                             </button>
                                         </div>
                                     </div>
-                                    <div x-show="isAccordionOpen(domainKey, age)" x-collapse class="p-3 sm:p-5 bg-zinc-50/50 space-y-3 sm:space-y-4 border-t border-zinc-100 rounded-b-lg">
+                                    <div x-show="isAccordionOpen(domainKey, age)" x-collapse
+                                        class="p-3 sm:p-5 bg-zinc-50/50 space-y-3 sm:space-y-4 border-t border-zinc-100 rounded-b-lg">
                                         <template x-for="(item, index) in milestoneData[age][domainKey]" :key="index">
-                                            <div class="flex items-center justify-between gap-3 p-3 sm:p-4 bg-white hover:bg-zinc-50 rounded-xl border border-zinc-200 shadow-sm transition-all group">
-                                                <span class="text-sm sm:text-[15px] text-zinc-700 font-medium group-hover:text-zinc-900 transition-colors flex-1" x-text="item"></span>
-                                                <div class="flex-shrink-0 inline-flex rounded-lg shadow-sm" role="group">
+                                            <div
+                                                class="flex items-center justify-between gap-3 p-3 sm:p-4 bg-white hover:bg-zinc-50 rounded-xl border border-zinc-200 shadow-sm transition-all group">
+                                                <div class="flex-1">
+                                                    <span
+                                                        class="text-sm sm:text-[15px] text-zinc-700 font-medium group-hover:text-zinc-900 transition-colors"
+                                                        x-text="item"></span>
+                                                    <span x-show="getSimilarBadge(domainKey, age, item)"
+                                                        class="ml-1.5 inline-flex items-center text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-200 font-medium whitespace-nowrap"
+                                                        x-text="getSimilarBadge(domainKey, age, item)"></span>
+                                                </div>
+                                                <div class="flex-shrink-0 inline-flex rounded-lg shadow-sm"
+                                                    role="group">
                                                     <button @click="setTargetItem(domainKey, age, item, 'pass')"
                                                         class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-l-md border border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
                                                         :class="assessments[domainKey][age][item] === 'pass' ? 'bg-zinc-800 text-white border-zinc-800 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">達標(O)</button>
@@ -135,7 +171,8 @@
                 <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
                     <div class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-100">
                         <h2 class="text-lg font-semibold text-zinc-800 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                                 </path>
@@ -145,7 +182,11 @@
                         <div class="flex gap-2">
                             <button @click="regenerateObjective()" x-show="objectiveEdited" x-cloak
                                 class="text-sm px-3 py-1.5 bg-rose-50 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-100 transition-colors flex items-center gap-1.5 shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                    </path>
+                                </svg>
                                 有修改，重新產生
                             </button>
                             <button @click="copyText(objectiveText, 'btn1')" id="btn1"
@@ -166,7 +207,8 @@
                 <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
                     <div class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-100">
                         <h2 class="text-lg font-semibold text-zinc-800 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                                 </path>
@@ -176,7 +218,11 @@
                         <div class="flex gap-2">
                             <button @click="regenerateSummary()" x-show="summaryEdited" x-cloak
                                 class="text-sm px-3 py-1.5 bg-rose-50 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-100 transition-colors flex items-center gap-1.5 shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                    </path>
+                                </svg>
                                 有修改，重新產生
                             </button>
                             <button @click="copyText(summaryText, 'btn2')" id="btn2"
@@ -205,6 +251,72 @@
 
     <script>
         const milestoneData = {
+            "0.33": {
+                gross: [
+                    "俯臥時能抬頭(抬胸)",
+                    "拉扶坐起時頭部僅輕微後傾",
+                    "俯臥時能用手臂撐起上半身"
+                ],
+                fine: [
+                    "手會自動張開",
+                    "手能握住搖鈴",
+                    "雙手會舉起凝視"
+                ],
+                lang: [
+                    "轉頭朝向音源",
+                    "有人對他說話會咿呀作聲",
+                    "逗弄時會笑出聲音"
+                ],
+                social: [
+                    "逗他會微笑",
+                    "雙眼凝視人物並追尋移動物體",
+                    "餵食時會張口表示要吃"
+                ]
+            },
+            "0.5": {
+                gross: [
+                    "會自己翻身(俯臥成仰臥)",
+                    "抱直時脖子豎直頭保持在中央",
+                    "可以自己坐在有靠背的椅子上"
+                ],
+                fine: [
+                    "雙手互握在一起",
+                    "手能伸向物體",
+                    "自己會拉開在臉上的手帕"
+                ],
+                lang: [
+                    "會發出單音(如ㄅㄚ、ㄇㄚ)",
+                    "哭鬧時能因媽媽撫慰聲而停哭",
+                    "轉頭朝向聲源"
+                ],
+                social: [
+                    "會對熟悉的人親切微笑",
+                    "餵他吃時會張口或用動作表示要吃",
+                    "看到東西會想伸手去拿"
+                ]
+            },
+            "0.75": {
+                gross: [
+                    "不需扶持可坐穩",
+                    "能獨立爬行",
+                    "扶著欄杆可站立"
+                ],
+                fine: [
+                    "將東西由一手換到另一手",
+                    "能用兩手拿小杯子",
+                    "會把東西往嘴裡送"
+                ],
+                lang: [
+                    "會模仿簡單的聲音",
+                    "對叫喚名字有反應(轉頭)",
+                    "用不同聲音表達情緒"
+                ],
+                social: [
+                    "會怕陌生人",
+                    "自己能拿餅乾吃",
+                    "會玩躲貓貓(peekaboo)"
+                ]
+            },
             "1": {
                 gross: [
                     "拉著物體站起來",
@@ -415,9 +527,9 @@
 
         document.addEventListener('alpine:init', () => {
             Alpine.data('pedApp', () => ({
-                ages: ["1", "1.5", "2", "2.5", "3", "4", "5"],
-                selectedAge: "1",
-                entryMethod: "自行走入診間",
+                ages: ["0.33", "0.5", "0.75", "1", "1.5", "2", "2.5", "3", "4", "5"],
+                selectedAge: "0.33",
+                entryMethod: "由父母抱入診間",
                 emotionState: "情緒及專注力可",
 
                 domainNames: {
@@ -430,8 +542,25 @@
                 assessments: {},
                 openAccordions: {},
 
-                previousAge: "1",
-                
+                previousAge: "0.33",
+
+                // Groups of identical items that auto-sync state
+                identicalItems: [
+                    ["模仿畫圈", ["2.5", "3"], "fine"],
+                    ["會模仿簡單的聲音", ["0.75", "1"], "lang"],
+                ],
+                // Groups of similar (but not identical) items — display badge only
+                similarGroups: [
+                    { items: ["雙腳離地跳", "雙腳同時離地跳"], ages: ["2", "2.5"], domain: "gross", canonical: "雙腳同時離地跳" },
+                    { items: ["踮腳尖走幾步", "踮腳尖走"], ages: ["2.5", "3"], domain: "gross", canonical: "踮腳尖走" },
+                    { items: ["穿衣時配合伸出手臂", "穿衣時配合"], ages: ["1", "1.5"], domain: "social", canonical: "穿衣時配合" },
+                    { items: ["腳尖腳跟走", "腳跟接腳尖走直線(tandem walk)"], ages: ["4", "5"], domain: "gross", canonical: "腳跟接腳尖走直線(tandem walk)" },
+                    { items: ["單腳站立1~2秒", "單腳站5秒", "單腳站10秒"], ages: ["3", "4", "5"], domain: "gross", canonical: "單腳站" },
+                    { items: ["用湯匙嘗試進食", "用湯匙喝東西", "用湯匙吃飯"], ages: ["1.5", "1.5", "2.5"], domain: "social", canonical: "用湯匙進食" },
+                    { items: ["對名字有反應(叫他轉頭)", "對叫喚名字有反應(轉頭)"], ages: ["1", "0.75"], domain: "lang", canonical: "對叫喚名字有反應" },
+                    { items: ["轉頭朝向音源", "轉頭朝向聲源"], ages: ["0.33", "0.5"], domain: "lang", canonical: "轉頭朝向聲源" },
+                ],
+
                 objectiveText: "",
                 summaryText: "",
                 objectiveEdited: false,
@@ -439,6 +568,12 @@
 
                 init() {
                     this.initChecklist();
+                },
+
+                ageLabel(age) {
+                    const num = parseFloat(age);
+                    if (num < 1) return Math.round(num * 12) + ' 個月';
+                    return age + ' 歲';
                 },
 
                 updateReports() {
@@ -483,7 +618,7 @@
                     Object.keys(this.domainNames).forEach(domainKey => {
                         if (shouldReset) this.assessments[domainKey] = {};
                         this.openAccordions[domainKey] = {};
-                        
+
                         this.ages.forEach(age => {
                             if (shouldReset) this.assessments[domainKey][age] = {};
                             this.openAccordions[domainKey][age] = (age === this.selectedAge);
@@ -510,7 +645,44 @@
 
                 setTargetItem(domainKey, age, item, state) {
                     this.assessments[domainKey][age][item] = state;
+                    // Auto-sync identical items across ages
+                    for (const [identicalItem, ages, domain] of this.identicalItems) {
+                        if (domain === domainKey && item === identicalItem && ages.includes(age)) {
+                            ages.forEach(otherAge => {
+                                if (otherAge !== age && this.assessments[domain]?.[otherAge]?.[identicalItem] !== undefined) {
+                                    this.assessments[domain][otherAge][identicalItem] = state;
+                                }
+                            });
+                        }
+                    }
                     this.updateReports();
+                },
+
+                getSimilarBadge(domainKey, age, item) {
+                    // Check identical items
+                    for (const [identicalItem, ages, domain] of this.identicalItems) {
+                        if (domain === domainKey && item === identicalItem && ages.includes(age)) {
+                            const otherAges = ages.filter(a => a !== age).map(a => this.ageLabel(a));
+                            if (otherAges.length) return `↔ ${otherAges.join(', ')}同項目`;
+                        }
+                    }
+                    // Check similar groups
+                    for (const group of this.similarGroups) {
+                        if (group.domain === domainKey && group.items.includes(item)) {
+                            const idx = group.items.indexOf(item);
+                            const otherIdxes = group.items.map((it, i) => i).filter(i => i !== idx);
+                            const otherAges = otherIdxes.map(i => this.ageLabel(group.ages[i]));
+                            if (otherAges.length) return `≈ ${otherAges.join(', ')}相似`;
+                        }
+                    }
+                    return '';
+                },
+
+                getCanonical(item) {
+                    for (const group of this.similarGroups) {
+                        if (group.items.includes(item)) return group.canonical;
+                    }
+                    return item;
                 },
 
                 setTargetItemAll(domainKey, age, state) {
@@ -524,7 +696,7 @@
                 toggleAll() {
                     // Reset all items across all ages to "nt" (未測) 
                     // and set current age to "pass" to simulate a complete fresh start for the selected age
-                    if(confirm("確定要清除所有評估紀錄，重置為未測狀態嗎？")) {
+                    if (confirm("確定要清除所有評估紀錄，重置為未測狀態嗎？")) {
                         Object.keys(this.domainNames).forEach(domainKey => {
                             this.ages.forEach(age => {
                                 const items = milestoneData[age][domainKey] || [];
@@ -546,19 +718,32 @@
                     const printDomain = (engName, domainKey) => {
                         const passedSet = new Set();
                         const failedSet = new Set();
-                        
+                        const canonicalSeen = new Set();
+
                         this.ages.forEach(age => {
                             const items = milestoneData[age][domainKey] || [];
                             items.forEach(item => {
                                 const state = this.assessments[domainKey][age][item];
-                                if (state === 'pass') passedSet.add(item);
-                                if (state === 'fail') failedSet.add(item);
+                                const canonical = this.getCanonical(item);
+                                if (state === 'pass' && !canonicalSeen.has(canonical + '_pass')) {
+                                    passedSet.add(item);
+                                    canonicalSeen.add(canonical + '_pass');
+                                }
+                                if (state === 'fail' && !canonicalSeen.has(canonical + '_fail')) {
+                                    failedSet.add(item);
+                                    canonicalSeen.add(canonical + '_fail');
+                                }
                             });
                         });
-                        
-                        // Deduplication: Fail overrides Pass
+
+                        // Deduplication: Fail overrides Pass (including canonical matches)
+                        const passedCanonicals = new Map();
+                        passedSet.forEach(item => passedCanonicals.set(this.getCanonical(item), item));
                         failedSet.forEach(item => {
-                            if (passedSet.has(item)) passedSet.delete(item);
+                            const canon = this.getCanonical(item);
+                            if (passedCanonicals.has(canon)) {
+                                passedSet.delete(passedCanonicals.get(canon));
+                            }
                         });
 
                         let domainOutput = '';
@@ -580,9 +765,51 @@
 
                 getSummaryReport() {
                     let parts = [];
-                    parts.push(`該名 ${this.selectedAge} 歲孩童今日${this.entryMethod}，評估過程中${this.emotionState}。`);
+                    const ageLabel = this.ageLabel(this.selectedAge);
+                    parts.push(`該名 ${ageLabel}孩童今日${this.entryMethod}，評估過程中${this.emotionState}。`);
 
                     const failPhrases = {
+                        // 4個月
+                        "俯臥時能抬頭(抬胸)": "俯臥時尚無法穩定抬頭抬胸",
+                        "拉扶坐起時頭部僅輕微後傾": "拉扶坐起時頭部後傾明顯",
+                        "俯臥時能用手臂撐起上半身": "俯臥時尚無法用手臂撐起上半身",
+                        "手會自動張開": "雙手尚未出現自動張開的表現",
+                        "手能握住搖鈴": "尚無法握住搖鈴",
+                        "雙手會舉起凝視": "尚未出現舉手凝視的動作",
+                        "轉頭朝向音源": "對聲音尚無法轉頭朝向音源",
+                        "有人對他說話會咿呀作聲": "有人對他說話時尚無咿呀回應",
+                        "逗弄時會笑出聲音": "逗弄時尚不會笑出聲音",
+                        "逗他會微笑": "逗弄時尚無明顯微笑反應",
+                        "雙眼凝視人物並追尋移動物體": "雙眼追視移動物體的能力尚不穩定",
+                        "餵食時會張口表示要吃": "餵食時尚無張口表示要吃的反應",
+
+                        // 6個月
+                        "會自己翻身(俯臥成仰臥)": "尚不會自己翻身",
+                        "抱直時脖子豎直頭保持在中央": "抱直時頭部控制尚不穩定",
+                        "可以自己坐在有靠背的椅子上": "尚無法自己坐在有靠背的椅子上",
+                        "雙手互握在一起": "尚未出現雙手互握的動作",
+                        "手能伸向物體": "手尚無法主動伸向物體",
+                        "自己會拉開在臉上的手帕": "尚不會自己拉開臉上的手帕",
+                        "會發出單音(如ㄅㄚ、ㄇㄚ)": "尚未發出明確的單音",
+                        "哭鬧時能因媽媽撫慰聲而停哭": "哭鬧時對撫慰聲的反應尚不明顯",
+                        "轉頭朝向聲源": "尚無法穩定轉頭朝向聲源",
+                        "會對熟悉的人親切微笑": "對熟悉的人尚無明顯的親切微笑",
+                        "餵他吃時會張口或用動作表示要吃": "餵食時尚無用動作表示要吃的反應",
+                        "看到東西會想伸手去拿": "看到東西尚不會主動伸手去拿",
+
+                        // 9個月
+                        "不需扶持可坐穩": "不需扶持時尚無法坐穩",
+                        "能獨立爬行": "尚無法獨立爬行",
+                        "扶著欄杆可站立": "尚無法扶著欄杆站立",
+                        "將東西由一手換到另一手": "尚無法將東西由一手換到另一手",
+                        "能用兩手拿小杯子": "尚無法用兩手拿小杯子",
+                        "會把東西往嘴裡送": "尚不會把東西往嘴裡送",
+                        "對叫喚名字有反應(轉頭)": "對叫喚名字尚無轉頭反應",
+                        "用不同聲音表達情緒": "尚不會用不同聲音表達情緒",
+                        "會怕陌生人": "尚未出現怕陌生人的反應",
+                        "自己能拿餅乾吃": "尚無法自己拿餅乾吃",
+                        "會玩躲貓貓(peekaboo)": "尚不會參與躲貓貓遊戲",
+
                         // 1歲
                         "拉著物體站起來": "尚無法拉著物體站起來",
                         "扶著家具側走(cruising)": "尚無法扶著家具側走(cruising)",
@@ -737,20 +964,32 @@
                         // Gather all passed and failed items across all ages
                         const passedSet = new Set();
                         const failedSet = new Set();
+                        const canonicalSeen = new Set();
 
                         this.ages.forEach(age => {
                             const items = milestoneData[age][domainKey] || [];
                             items.forEach(item => {
                                 const state = this.assessments[domainKey][age][item];
-                                if (state === 'pass') passedSet.add(item);
-                                if (state === 'fail') failedSet.add(item);
+                                const canonical = this.getCanonical(item);
+                                if (state === 'pass' && !canonicalSeen.has(canonical + '_pass')) {
+                                    passedSet.add(item);
+                                    canonicalSeen.add(canonical + '_pass');
+                                }
+                                if (state === 'fail' && !canonicalSeen.has(canonical + '_fail')) {
+                                    failedSet.add(item);
+                                    canonicalSeen.add(canonical + '_fail');
+                                }
                             });
                         });
 
-                        // Deduplication: If an item is in failedSet, it must NOT be in passedSet
-                        // This handles the overlap where a 2yo task is (O) but same 3yo task is (X)
+                        // Deduplication: Fail overrides Pass (including canonical matches)
+                        const passedCanonicals = new Map();
+                        passedSet.forEach(item => passedCanonicals.set(this.getCanonical(item), item));
                         failedSet.forEach(item => {
-                            if (passedSet.has(item)) passedSet.delete(item);
+                            const canon = this.getCanonical(item);
+                            if (passedCanonicals.has(canon)) {
+                                passedSet.delete(passedCanonicals.get(canon));
+                            }
                         });
 
                         const passed = Array.from(passedSet);
@@ -759,7 +998,7 @@
                         if (passed.length === 0 && failed.length === 0) return '';
 
                         let line = `${domainName}方面：`;
-                        
+
                         // If there are failures, we can't just say "all achieved"
                         if (failed.length === 0) {
                             if (passed.length > 0) {
