@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小兒發展里程碑快速評估</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-50 min-h-screen text-zinc-900 p-4 md:p-8">
+
+    <div class="max-w-[1600px] mx-auto" x-data="pedApp()" x-cloak>
+        <header class="mb-8 text-center flex flex-col items-center">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900">小兒發展里程碑快速評估</h1>
+            <p class="text-zinc-500 mt-2">Pediatric Milestone Assessment Tool</p>
+            <p class="text-[11px] text-zinc-400 mt-1">參考來源：國民健康署兒童發展連續圖（50% 時程）；CDC 2022 Learn the Signs. Act Early. (75% 時程)</p>
+        </header>
+
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+            <!-- Left Panel -->
+            <div class="xl:col-span-3 space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
+                    <h2 class="text-lg font-semibold mb-4 text-zinc-800 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        基本狀態評估
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">評估年齡</label>
+                            <select x-model="selectedAge" @change="onAgeChange()"
+                                class="w-full rounded-md border-zinc-300 shadow-sm focus:border-zinc-800 focus:ring-zinc-800 bg-white p-2 border">
+                                <template x-for="age in ages" :key="age">
+                                    <option :value="age" x-text="ageLabel(age)"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">進入診間方式</label>
+                            <select x-model="entryMethod" @change="updateReports()"
+                                class="w-full rounded-md border-zinc-300 shadow-sm focus:border-zinc-800 focus:ring-zinc-800 bg-white p-2 border">
+                                <option value="自行走入診間">自行走入診間</option>
+                                <option value="由父母抱入診間">由父母抱入診間</option>
+                                <option value="坐推車進入診間">坐推車進入診間</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">情緒與專注力</label>
+                            <select x-model="emotionState" @change="updateReports()"
+                                class="w-full rounded-md border-zinc-300 shadow-sm focus:border-zinc-800 focus:ring-zinc-800 bg-white p-2 border">
+                                <option value="情緒及專注力可">情緒及專注力可</option>
+                                <option value="易分心">易分心</option>
+                                <option value="情緒及專注力佳">情緒及專注力佳</option>
+                                <option value="哭鬧難安撫">哭鬧難安撫</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 全部重置按鈕 -->
+                <div class="flex justify-end">
+                    <button @click="toggleAll()"
+                        class="text-sm px-3 py-1.5 bg-white text-zinc-600 border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-rose-600 transition-colors flex items-center gap-1.5 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
+                        全部重置為未測
+                    </button>
+                </div>
+
+                <!-- 各領域獨立卡片 -->
+                <template x-for="(domainName, domainKey) in domainNames" :key="domainKey">
+                    <div class="bg-white p-5 sm:p-6 rounded-xl border border-zinc-200 shadow-sm">
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-zinc-200">
+                            <h2 class="text-lg sm:text-xl font-bold text-zinc-900 flex items-center gap-2">
+                                <span class="w-1.5 h-6 bg-zinc-800 rounded-full inline-block"></span>
+                                <span x-text="domainName"></span>
+                            </h2>
+                        </div>
+                        <div class="space-y-3">
+                            <template x-for="age in ages" :key="age">
+                                <div class="border rounded-lg overflow-hidden transition-colors"
+                                    :class="age === selectedAge ? 'border-zinc-400 ring-1 ring-zinc-200' : 'border-zinc-200'">
+                                    <div class="px-3 py-2.5 text-left flex justify-between items-center transition-colors cursor-pointer"
+                                        :class="age === selectedAge ? 'bg-zinc-50' : 'bg-white hover:bg-zinc-50'"
+                                        @click.self="toggleAccordion(domainKey, age)">
+                                        <div class="flex items-center gap-2 pointer-events-none">
+                                            <span class="text-sm font-semibold"
+                                                :class="age === selectedAge ? 'text-zinc-900' : 'text-zinc-600'"
+                                                x-text="ageLabel(age)"></span>
+                                            <span x-show="age === selectedAge"
+                                                class="text-[10px] bg-zinc-800 text-white px-2 py-0.5 rounded-full font-medium tracking-wide">基準年齡</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex gap-1 items-center"
+                                                x-show="isAccordionOpen(domainKey, age)">
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'pass')"
+                                                    title="本頁全達標"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(O)</button>
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'nt')"
+                                                    title="本頁全未測"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(-)</button>
+                                                <button @click.stop="setTargetItemAll(domainKey, age, 'fail')"
+                                                    title="本頁全未達"
+                                                    class="text-[11px] px-2 py-1 rounded-md text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 transition">全(X)</button>
+                                            </div>
+                                            <button @click="toggleAccordion(domainKey, age)"
+                                                class="p-1 hover:bg-black/5 rounded text-zinc-400">
+                                                <svg class="w-4 h-4 transition-transform duration-200"
+                                                    :class="isAccordionOpen(domainKey, age) ? 'rotate-180' : ''"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div x-show="isAccordionOpen(domainKey, age)" x-collapse
+                                        class="p-3 sm:p-5 bg-zinc-50/50 space-y-3 sm:space-y-4 border-t border-zinc-100 rounded-b-lg">
+                                        <template x-for="(item, index) in milestoneData[age][domainKey]" :key="index">
+                                            <div
+                                                class="flex items-center justify-between gap-3 p-3 sm:p-4 bg-white hover:bg-zinc-50 rounded-xl border border-zinc-200 shadow-sm transition-all group">
+                                                <div class="flex-1">
+                                                    <span
+                                                        class="text-sm sm:text-[15px] text-zinc-700 font-medium group-hover:text-zinc-900 transition-colors"
+                                                        x-text="item"></span>
+                                                </div>
+                                                <div class="flex-shrink-0 inline-flex rounded-lg shadow-sm"
+                                                    role="group">
+                                                    <button @click="setTargetItem(domainKey, age, item, 'pass')"
+                                                        class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-l-md border border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                        :class="assessments[domainKey][age][item] === 'pass' ? 'bg-zinc-800 text-white border-zinc-800 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">達標(O)</button>
+                                                    <button @click="setTargetItem(domainKey, age, item, 'nt')"
+                                                        class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold border-y border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                        :class="assessments[domainKey][age][item] === 'nt' ? 'bg-zinc-100 text-zinc-500 border-zinc-200 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未測(-)</button>
+                                                    <button @click="setTargetItem(domainKey, age, item, 'fail')"
+                                                        class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-r-md border border-zinc-200 transition-colors focus:z-10 focus:ring-2 focus:ring-zinc-800"
+                                                        :class="assessments[domainKey][age][item] === 'fail' ? 'bg-rose-50 text-rose-700 border-rose-200 ring-1 ring-inset ring-rose-300 shadow-inner' : 'bg-white text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700'">未達(X)</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="xl:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-100">
+                        <h2 class="text-lg font-semibold text-zinc-800 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            1. 病歷 Objective 內容
+                        </h2>
+                        <div class="flex gap-2">
+                            <button @click="regenerateObjective()" x-show="objectiveEdited" x-cloak
+                                class="text-sm px-3 py-1.5 bg-rose-50 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-100 transition-colors flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                    </path>
+                                </svg>
+                                有修改，重新產生
+                            </button>
+                            <button @click="copyText(objectiveText, 'btn1')" id="btn1"
+                                class="text-sm px-3 py-1.5 bg-white border border-zinc-200 text-zinc-600 rounded-lg hover:bg-zinc-50 transition-colors flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                複製
+                            </button>
+                        </div>
+                    </div>
+                    <textarea x-model="objectiveText" @input="objectiveEdited = true"
+                        class="w-full min-h-[280px] p-4 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 leading-relaxed resize-y focus:bg-white focus:ring-2 focus:ring-zinc-800 transition-colors outline-none"></textarea>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-zinc-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-100">
+                        <h2 class="text-lg font-semibold text-zinc-800 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-zinc-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                </path>
+                            </svg>
+                            2. 聯合評估統合報告 (敘述型)
+                        </h2>
+                        <div class="flex gap-2">
+                            <button @click="regenerateSummary()" x-show="summaryEdited" x-cloak
+                                class="text-sm px-3 py-1.5 bg-rose-50 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-100 transition-colors flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                    </path>
+                                </svg>
+                                有修改，重新產生
+                            </button>
+                            <button @click="copyText(summaryText, 'btn2')" id="btn2"
+                                class="text-sm px-3 py-1.5 bg-white border border-zinc-200 text-zinc-600 rounded-lg hover:bg-zinc-50 transition-colors flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                複製
+                            </button>
+                        </div>
+                    </div>
+                    <textarea x-model="summaryText" @input="summaryEdited = true"
+                        class="w-full min-h-[280px] p-4 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 leading-relaxed resize-y focus:bg-white focus:ring-2 focus:ring-zinc-800 transition-colors outline-none"></textarea>
+                    <div class="mt-3 text-right">
+                        <span class="text-[11px] font-medium px-2 py-1 rounded"
+                            :class="summaryText.length > 500 ? 'bg-red-50 text-red-600' : 'bg-transparent text-zinc-400'">
+                            字數：<span x-text="summaryText.length"></span> / 500
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== 重整後的里程碑資料 ======
+        // 主要參考：衛福部國健署兒童發展連續圖（50% 時程）
+        // 輔助參考：CDC 2022 Learn the Signs. Act Early. (75% 時程)
+        // 嚴格去重：同一概念只在一個年齡出現
+        const milestoneData = {
+            // ========== 4 個月 ==========
+            "0.33": {
+                gross: [
+                    "俯臥時骨盆平貼於床面，頭、胸部可抬離",
+                    "拉扶坐起時頭部僅輕微後傾",
+                    "俯臥時可用前臂撐起，頭抬至 90°",
+                    "坐姿扶持時頭部幾乎一直抬起"
+                ],
+                fine: [
+                    "雙手會自動張開",
+                    "搖鈴放手中可握住約 1 分鐘",
+                    "雙手會舉起並凝視",
+                    "雙眼可凝視人物並追視移動物體"
+                ],
+                lang: [
+                    "轉頭朝向音源",
+                    "有人對他說話會發出咿呀聲",
+                    "逗弄時會笑出聲音",
+                    "看他時會回看你的眼睛"
+                ],
+                social: [
+                    "逗他時會微笑",
+                    "看到熟悉的人會親切微笑",
+                    "餵食時會張口表示要吃"
+                ]
+            },
+
+            // ========== 6 個月 ==========
+            "0.5": {
+                gross: [
+                    "會自己翻身（俯臥成仰臥）",
+                    "抱直時脖子豎直、頭保持在中央",
+                    "可以自己坐在有靠背的椅子上",
+                    "俯臥時可用兩手伸直撐起上半身"
+                ],
+                fine: [
+                    "雙手會互握在一起",
+                    "手能主動伸向物體",
+                    "自己會拉開臉上的手帕",
+                    "看到東西會想伸手去拿"
+                ],
+                lang: [
+                    "會發出單音（如 ㄅㄚ、ㄇㄚ）",
+                    "哭鬧時會因媽媽撫慰聲而停哭",
+                    "會用不同聲音表達情緒"
+                ],
+                social: [
+                    "認得熟悉的照顧者並表現親近",
+                    "餵食時會張口或用動作表示要吃",
+                    "對鏡中影像感到興趣"
+                ]
+            },
+
+            // ========== 9 個月 ==========
+            "0.75": {
+                gross: [
+                    "不需扶持可坐穩",
+                    "獨立爬行（腹部離地）",
+                    "雙手扶傢俱可站立",
+                    "坐時會移動身體挪向所要的物體"
+                ],
+                fine: [
+                    "將東西由一手換到另一手",
+                    "用兩手拿小杯子",
+                    "會把東西往嘴裡送",
+                    "會用整個手掌抓取小餅乾"
+                ],
+                lang: [
+                    "會模仿簡單的聲音",
+                    "對叫喚名字有反應（會轉頭）",
+                    "會發出連續音節（如 mama、baba 但無特定意義）"
+                ],
+                social: [
+                    "會怕陌生人",
+                    "會玩躲貓貓（peekaboo）",
+                    "自己能拿餅乾吃"
+                ]
+            },
+
+            // ========== 12 個月 / 1 歲 ==========
+            "1": {
+                gross: [
+                    "雙手扶著傢俱可走幾步（cruising）",
+                    "拉著物體自己站起來",
+                    "雙手拉著可走幾步",
+                    "獨立站立數秒"
+                ],
+                fine: [
+                    "用拇指和食指捏起小東西（pincer grasp）",
+                    "拍手",
+                    "會把小東西放入杯中",
+                    "粗略翻書（多頁一起翻）"
+                ],
+                lang: [
+                    "揮手表示再見",
+                    "有意義的叫爸爸、媽媽",
+                    "了解簡單指令（如：給我）",
+                    "用手指指向想要的東西"
+                ],
+                social: [
+                    "叫他他會來",
+                    "會脫下簡單的帽子",
+                    "穿衣時配合伸出手臂",
+                    "對成人示範動作會嘗試模仿"
+                ]
+            },
+
+            // ========== 18 個月 / 1.5 歲 ==========
+            "1.5": {
+                gross: [
+                    "走得穩、不太跌倒",
+                    "牽手或扶欄杆可上樓梯",
+                    "蹲下撿東西再站起",
+                    "向後退走幾步"
+                ],
+                fine: [
+                    "會用筆亂塗",
+                    "重疊兩塊積木",
+                    "用湯匙嘗試進食",
+                    "可會撕紙"
+                ],
+                lang: [
+                    "主動說出至少 3 個有意義的單字",
+                    "聽從簡單的一步指令",
+                    "指出身體 1–2 個部位",
+                    "對熟悉名稱可指認（如：媽媽在哪）"
+                ],
+                social: [
+                    "雙手端著杯子喝水",
+                    "模仿大人做家事動作",
+                    "會脫下襪子或鞋子",
+                    "會打開糖果紙"
+                ]
+            },
+
+            // ========== 24 個月 / 2 歲 ==========
+            "2": {
+                gross: [
+                    "會跑步",
+                    "會踢球（一腳站立另一腳踢）",
+                    "兩步一階上下樓梯（兩腳併同一階）",
+                    "會自己由椅子上爬下"
+                ],
+                fine: [
+                    "一頁一頁翻書",
+                    "模仿畫垂直線",
+                    "疊 4–6 塊積木",
+                    "會將杯中的水倒到另一個杯子"
+                ],
+                lang: [
+                    "至少會說 10 個單字",
+                    "說出 2 個詞的短語（如：媽媽抱）",
+                    "能正確指出身體的一部分",
+                    "聽懂簡單的兩步指令"
+                ],
+                social: [
+                    "會自己脫去衣服",
+                    "用湯匙喝東西",
+                    "會與同儕進行平行遊戲",
+                    "會表達拒絕（不要）"
+                ]
+            },
+
+            // ========== 30 個月 / 2.5 歲 ==========
+            "2.5": {
+                gross: [
+                    "不扶東西雙腳同時離地跳",
+                    "沿直線走 2–3 步",
+                    "手心朝下丟球",
+                    "可踮腳尖走幾步"
+                ],
+                fine: [
+                    "模仿摺紙動作",
+                    "用線串大珠子",
+                    "可旋轉門把"
+                ],
+                lang: [
+                    "能正確說出身體 6 個部位名稱",
+                    "說出短句（3 個單字）",
+                    "幼兒說話約一半可被外人理解",
+                    "使用代名詞（我、你）"
+                ],
+                social: [
+                    "穿脫沒有鞋帶的鞋子",
+                    "主動告知想上廁所",
+                    "對其他孩子有互動興趣",
+                    "用湯匙吃飯不會灑出太多"
+                ]
+            },
+
+            // ========== 36 個月 / 3 歲 ==========
+            "3": {
+                gross: [
+                    "騎三輪車",
+                    "上樓梯可交換腳",
+                    "單腳站立 1–2 秒",
+                    "雙腳跳過小障礙物",
+                    "原地踮腳尖走"
+                ],
+                fine: [
+                    "用三根手指握住筆",
+                    "模仿畫圓圈",
+                    "疊 8–9 塊積木",
+                    "解開大鈕扣"
+                ],
+                lang: [
+                    "講自己的姓和名",
+                    "說出自己的性別",
+                    "理解你的、我的",
+                    "說出 4–5 個單字的句子",
+                    "幼兒說話大部分可被外人理解"
+                ],
+                social: [
+                    "會自己穿衣服（套頭、套手）",
+                    "白天不尿褲子",
+                    "與同伴一起玩（輪流概念開始）",
+                    "會自己洗手並擦乾"
+                ]
+            },
+
+            // ========== 48 個月 / 4 歲 ==========
+            "4": {
+                gross: [
+                    "單腳連續跳 3–5 下",
+                    "單腳站立 5 秒",
+                    "下樓梯可交換腳",
+                    "過肩投擲球",
+                    "可跳遠 30–45 公分"
+                ],
+                fine: [
+                    "模仿畫十字與正方形",
+                    "畫人有 2–3 個可辨識部位",
+                    "會用兒童剪刀剪紙（直線）",
+                    "拇指對指動作",
+                    "可解開鈕扣"
+                ],
+                lang: [
+                    "數數 1–4",
+                    "辨認紅、黃、綠等基本顏色",
+                    "使用疑問句（誰、什麼、哪裡）",
+                    "理解空間概念（裡外上下）",
+                    "能依指示拿取 3 個以內物品"
+                ],
+                social: [
+                    "會自己穿襪子",
+                    "用牙刷刷牙",
+                    "進行假扮遊戲（imaginary play）",
+                    "懂得與同伴分享"
+                ]
+            },
+
+            // ========== 60 個月 / 5 歲 ==========
+            "5": {
+                gross: [
+                    "單腳站立 10 秒",
+                    "腳跟接腳尖向前走 2–3 步（tandem walk）",
+                    "做小跳步（skipping）",
+                    "可雙腳跳遠 45 公分以上",
+                    "不需牽扶可自行上下樓梯"
+                ],
+                fine: [
+                    "模仿畫正三角形",
+                    "畫人至少 4–6 個可辨識部位",
+                    "熟練使用剪刀沿線剪紙",
+                    "模仿寫出簡單文字或數字"
+                ],
+                lang: [
+                    "數數 1–10",
+                    "說出 8–10 個單字的句子",
+                    "覆誦 5 個阿拉伯數字（如 96257）",
+                    "能說出器官功能（眼睛看、嘴巴吃）",
+                    "說出兩種常見物品的用途",
+                    "描述日常發生的事情"
+                ],
+                social: [
+                    "會拉拉鍊、解扣子",
+                    "遵守團體遊戲規則（如捉迷藏）",
+                    "會自己用牙刷刷牙、洗臉",
+                    "對同伴情緒有同理反應"
+                ]
+            }
+        };
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('pedApp', () => ({
+                ages: ["0.33", "0.5", "0.75", "1", "1.5", "2", "2.5", "3", "4", "5"],
+                selectedAge: "0.33",
+                entryMethod: "由父母抱入診間",
+                emotionState: "情緒及專注力可",
+
+                domainNames: {
+                    gross: "粗大動作 (Gross Motor)",
+                    fine: "精細動作 (Fine Motor)",
+                    lang: "語言溝通 (Speech & Language)",
+                    social: "情緒互動及日常生活 (Social & Self-care)"
+                },
+
+                assessments: {},
+                openAccordions: {},
+
+                previousAge: "0.33",
+
+                objectiveText: "",
+                summaryText: "",
+                objectiveEdited: false,
+                summaryEdited: false,
+
+                init() {
+                    this.initChecklist();
+                },
+
+                ageLabel(age) {
+                    const num = parseFloat(age);
+                    if (num < 1) return Math.round(num * 12) + ' 個月';
+                    return age + ' 歲';
+                },
+
+                updateReports() {
+                    if (!this.objectiveEdited) {
+                        this.objectiveText = this.getObjectiveReport();
+                    }
+                    if (!this.summaryEdited) {
+                        this.summaryText = this.getSummaryReport();
+                    }
+                },
+
+                regenerateObjective() {
+                    if (confirm("重新產生將會覆蓋您手動修改的內容，確定要繼續嗎？")) {
+                        this.objectiveEdited = false;
+                        this.updateReports();
+                    }
+                },
+
+                regenerateSummary() {
+                    if (confirm("重新產生將會覆蓋您手動修改的內容，確定要繼續嗎？")) {
+                        this.summaryEdited = false;
+                        this.updateReports();
+                    }
+                },
+
+                onAgeChange() {
+                    this.previousAge = this.selectedAge;
+                    this.initChecklist(true);
+                },
+
+                initChecklist(forceReset = false) {
+                    const isFirstInit = Object.keys(this.assessments).length === 0;
+                    const shouldReset = isFirstInit || forceReset;
+
+                    if (shouldReset) {
+                        this.assessments = {};
+                        this.objectiveEdited = false;
+                        this.summaryEdited = false;
+                    }
+                    this.openAccordions = {};
+
+                    Object.keys(this.domainNames).forEach(domainKey => {
+                        if (shouldReset) this.assessments[domainKey] = {};
+                        this.openAccordions[domainKey] = {};
+
+                        this.ages.forEach(age => {
+                            if (shouldReset) this.assessments[domainKey][age] = {};
+                            this.openAccordions[domainKey][age] = (age === this.selectedAge);
+
+                            const items = milestoneData[age][domainKey] || [];
+                            items.forEach(item => {
+                                if (shouldReset) {
+                                    this.assessments[domainKey][age][item] = (age === this.selectedAge) ? 'pass' : 'nt';
+                                }
+                            });
+                        });
+                    });
+
+                    this.updateReports();
+                },
+
+                toggleAccordion(domainKey, age) {
+                    this.openAccordions[domainKey][age] = !this.openAccordions[domainKey][age];
+                },
+
+                isAccordionOpen(domainKey, age) {
+                    return this.openAccordions[domainKey] && this.openAccordions[domainKey][age];
+                },
+
+                setTargetItem(domainKey, age, item, state) {
+                    this.assessments[domainKey][age][item] = state;
+                    this.updateReports();
+                },
+
+                setTargetItemAll(domainKey, age, state) {
+                    const items = milestoneData[age][domainKey] || [];
+                    items.forEach(item => {
+                        this.assessments[domainKey][age][item] = state;
+                    });
+                    this.updateReports();
+                },
+
+                toggleAll() {
+                    if (confirm("確定要清除所有評估紀錄，重置為未測狀態嗎？")) {
+                        Object.keys(this.domainNames).forEach(domainKey => {
+                            this.ages.forEach(age => {
+                                const items = milestoneData[age][domainKey] || [];
+                                items.forEach(item => {
+                                    this.assessments[domainKey][age][item] = (age === this.selectedAge) ? 'pass' : 'nt';
+                                });
+                            });
+                        });
+                        this.objectiveEdited = false;
+                        this.summaryEdited = false;
+                        this.updateReports();
+                    }
+                },
+
+                getObjectiveReport() {
+                    let p = `O:\n`;
+                    p += `Entry: ${this.entryMethod}\n`;
+                    p += `Mood/Attention: ${this.emotionState}\n\n`;
+
+                    const printDomain = (engName, domainKey) => {
+                        const passed = [];
+                        const failed = [];
+
+                        this.ages.forEach(age => {
+                            const items = milestoneData[age][domainKey] || [];
+                            items.forEach(item => {
+                                const state = this.assessments[domainKey][age][item];
+                                if (state === 'pass') passed.push(item);
+                                if (state === 'fail') failed.push(item);
+                            });
+                        });
+
+                        let domainOutput = '';
+                        passed.forEach(item => { domainOutput += `  ${item}:(O)\n`; });
+                        failed.forEach(item => { domainOutput += `  ${item}:(X)\n`; });
+
+                        if (domainOutput) {
+                            p += `${engName}:\n${domainOutput}\n`;
+                        } else {
+                            p += `${engName}: Not tested\n\n`;
+                        }
+                    };
+
+                    printDomain("Gross motor", "gross");
+                    printDomain("Fine motor", "fine");
+                    printDomain("Speech & language", "lang");
+                    printDomain("Social interaction", "social");
+                    return p.trim();
+                },
+
+                getSummaryReport() {
+                    let parts = [];
+                    const ageLabel = this.ageLabel(this.selectedAge);
+                    parts.push(`該名 ${ageLabel}孩童今日${this.entryMethod}，評估過程中${this.emotionState}。`);
+
+                    // 精修失敗描述字典（key 必須與 milestoneData 中的項目字串完全一致）
+                    const failPhrases = {
+                        // 4 個月
+                        "俯臥時骨盆平貼於床面，頭、胸部可抬離": "俯臥時尚無法穩定抬頭抬胸",
+                        "拉扶坐起時頭部僅輕微後傾": "拉扶坐起時頭部後傾仍明顯",
+                        "俯臥時可用前臂撐起，頭抬至 90°": "俯臥時尚無法以前臂撐起、頭抬至 90°",
+                        "坐姿扶持時頭部幾乎一直抬起": "坐姿扶持時頭部尚無法持續抬起",
+                        "雙手會自動張開": "雙手尚未自動張開",
+                        "搖鈴放手中可握住約 1 分鐘": "搖鈴放手中尚無法穩定握住",
+                        "雙手會舉起並凝視": "尚未出現舉手凝視的動作",
+                        "雙眼可凝視人物並追視移動物體": "雙眼追視移動物體的能力尚不穩定",
+                        "轉頭朝向音源": "對聲音尚無法轉頭朝向音源",
+                        "有人對他說話會發出咿呀聲": "有人對他說話時尚無咿呀回應",
+                        "逗弄時會笑出聲音": "逗弄時尚不會笑出聲音",
+                        "看他時會回看你的眼睛": "尚無法穩定的目光對視",
+                        "逗他時會微笑": "逗弄時尚無明顯微笑反應",
+                        "看到熟悉的人會親切微笑": "對熟悉的人尚無明顯的親切微笑",
+                        "餵食時會張口表示要吃": "餵食時尚無張口表示要吃的反應",
+
+                        // 6 個月
+                        "會自己翻身（俯臥成仰臥）": "尚不會自己翻身",
+                        "抱直時脖子豎直、頭保持在中央": "抱直時頭部控制尚不穩定",
+                        "可以自己坐在有靠背的椅子上": "尚無法自己坐在有靠背的椅子上",
+                        "俯臥時可用兩手伸直撐起上半身": "俯臥時尚無法用雙手伸直撐起上半身",
+                        "雙手會互握在一起": "尚未出現雙手互握的動作",
+                        "手能主動伸向物體": "手尚無法主動伸向物體",
+                        "自己會拉開臉上的手帕": "尚不會自己拉開臉上的手帕",
+                        "看到東西會想伸手去拿": "看到東西尚不會主動伸手去拿",
+                        "會發出單音（如 ㄅㄚ、ㄇㄚ）": "尚未發出明確的單音",
+                        "哭鬧時會因媽媽撫慰聲而停哭": "哭鬧時對撫慰聲的反應尚不明顯",
+                        "會用不同聲音表達情緒": "尚不會用不同聲音表達情緒",
+                        "認得熟悉的照顧者並表現親近": "對熟悉照顧者尚無明顯親近反應",
+                        "餵食時會張口或用動作表示要吃": "餵食時尚無用動作表示要吃的反應",
+                        "對鏡中影像感到興趣": "對鏡中影像尚無明顯興趣",
+
+                        // 9 個月
+                        "不需扶持可坐穩": "不需扶持時尚無法坐穩",
+                        "獨立爬行（腹部離地）": "尚無法獨立爬行（腹部離地）",
+                        "雙手扶傢俱可站立": "尚無法雙手扶傢俱站立",
+                        "坐時會移動身體挪向所要的物體": "坐姿下尚不會主動挪動身體取物",
+                        "將東西由一手換到另一手": "尚無法將東西由一手換到另一手",
+                        "用兩手拿小杯子": "尚無法用兩手拿小杯子",
+                        "會把東西往嘴裡送": "尚不會把東西往嘴裡送",
+                        "會用整個手掌抓取小餅乾": "尚不會用手掌抓取小餅乾",
+                        "會模仿簡單的聲音": "尚無法模仿簡單的聲音",
+                        "對叫喚名字有反應（會轉頭）": "對叫喚名字尚無轉頭反應",
+                        "會發出連續音節（如 mama、baba 但無特定意義）": "尚未發出連續音節的牙語",
+                        "會怕陌生人": "尚未出現怕陌生人的反應",
+                        "會玩躲貓貓（peekaboo）": "尚不會參與躲貓貓遊戲",
+                        "自己能拿餅乾吃": "尚無法自己拿餅乾吃",
+
+                        // 12 個月
+                        "雙手扶著傢俱可走幾步（cruising）": "尚無法扶傢俱側走（cruising）",
+                        "拉著物體自己站起來": "尚無法拉著物體自己站起",
+                        "雙手拉著可走幾步": "牽著手尚無法走幾步",
+                        "獨立站立數秒": "獨立站立尚無法維持數秒",
+                        "用拇指和食指捏起小東西（pincer grasp）": "尚未出現拇指食指捏取小物的 pincer grasp",
+                        "拍手": "尚不會拍手",
+                        "會把小東西放入杯中": "尚不會把小東西放入杯中",
+                        "粗略翻書（多頁一起翻）": "尚不會粗略翻書",
+                        "揮手表示再見": "尚不會揮手表示再見",
+                        "有意義的叫爸爸、媽媽": "尚無法有意義的叫爸爸、媽媽",
+                        "了解簡單指令（如：給我）": "尚無法理解簡單一步指令",
+                        "用手指指向想要的東西": "尚不會用手指指向想要的東西",
+                        "叫他他會來": "叫喚他時尚不會主動過來",
+                        "會脫下簡單的帽子": "尚無法自行脫下簡單的帽子",
+                        "穿衣時配合伸出手臂": "穿衣時尚不會配合伸出手臂",
+                        "對成人示範動作會嘗試模仿": "對成人示範動作尚少有模仿",
+
+                        // 18 個月
+                        "走得穩、不太跌倒": "走路仍較容易跌倒、步態尚不穩",
+                        "牽手或扶欄杆可上樓梯": "尚無法扶欄杆走上樓梯",
+                        "蹲下撿東西再站起": "蹲下撿東西後尚無法穩穩站起",
+                        "向後退走幾步": "尚無法向後退走幾步",
+                        "會用筆亂塗": "尚不會用筆亂塗",
+                        "重疊兩塊積木": "尚無法重疊兩塊積木",
+                        "用湯匙嘗試進食": "尚不會用湯匙嘗試進食",
+                        "可會撕紙": "尚不會撕紙",
+                        "主動說出至少 3 個有意義的單字": "有意義詞彙量尚不足 3 個",
+                        "聽從簡單的一步指令": "尚無法聽從簡單一步指令",
+                        "指出身體 1–2 個部位": "尚不會指出身體 1–2 個部位",
+                        "對熟悉名稱可指認（如：媽媽在哪）": "對熟悉名稱尚無法正確指認",
+                        "雙手端著杯子喝水": "尚無法雙手端杯喝水",
+                        "模仿大人做家事動作": "尚不具備模仿家事的動作",
+                        "會脫下襪子或鞋子": "尚不會自行脫下襪子或鞋子",
+                        "會打開糖果紙": "尚無法自行撥開糖果紙",
+
+                        // 24 個月
+                        "會跑步": "尚未發展出穩定的跑步動作",
+                        "會踢球（一腳站立另一腳踢）": "尚不會單腳支撐另一腳踢球",
+                        "兩步一階上下樓梯（兩腳併同一階）": "尚無法兩步一階上下樓梯",
+                        "會自己由椅子上爬下": "尚不會自行由椅子上爬下",
+                        "一頁一頁翻書": "尚無法一頁一頁翻書",
+                        "模仿畫垂直線": "尚不會模仿畫垂直線",
+                        "疊 4–6 塊積木": "尚無法疊高 4 塊以上積木",
+                        "會將杯中的水倒到另一個杯子": "尚無法穩定將水從一杯倒到另一杯",
+                        "至少會說 10 個單字": "有意義詞彙量尚不足 10 個",
+                        "說出 2 個詞的短語（如：媽媽抱）": "尚無法主動說出 2 個詞的短語",
+                        "能正確指出身體的一部分": "尚無法正確指出身體部位",
+                        "聽懂簡單的兩步指令": "尚無法聽懂簡單的兩步連續指令",
+                        "會自己脫去衣服": "尚不會自行脫去衣服",
+                        "用湯匙喝東西": "尚不會用湯匙喝東西",
+                        "會與同儕進行平行遊戲": "尚未觀察到與同儕的平行遊戲",
+                        "會表達拒絕（不要）": "尚不善於主動表達拒絕",
+
+                        // 30 個月
+                        "不扶東西雙腳同時離地跳": "尚無法雙腳同時離地跳",
+                        "沿直線走 2–3 步": "尚無法沿直線走 2–3 步",
+                        "手心朝下丟球": "尚無法手心朝下丟球",
+                        "可踮腳尖走幾步": "尚無法踮腳尖走幾步",
+                        "模仿摺紙動作": "尚不會模仿摺紙動作",
+                        "用線串大珠子": "尚無法用線串過大珠子",
+                        "可旋轉門把": "尚不會旋轉門把",
+                        "能正確說出身體 6 個部位名稱": "尚無法正確命名身體 6 個部位",
+                        "說出短句（3 個單字）": "尚無法流暢說出 3 個單字的短句",
+                        "幼兒說話約一半可被外人理解": "說話可被外人理解的比率不到一半",
+                        "使用代名詞（我、你）": "尚不會正確使用代名詞（我、你）",
+                        "穿脫沒有鞋帶的鞋子": "尚無法自行穿脫沒有鞋帶的鞋子",
+                        "主動告知想上廁所": "尚不會主動告知想上廁所",
+                        "對其他孩子有互動興趣": "對其他孩子尚缺乏明顯互動興趣",
+                        "用湯匙吃飯不會灑出太多": "用湯匙進食仍會大量灑出",
+
+                        // 36 個月
+                        "騎三輪車": "尚不會踩踏騎三輪車",
+                        "上樓梯可交換腳": "上樓梯尚無法兩腳輪替前進",
+                        "單腳站立 1–2 秒": "單腳站立尚無法維持 1–2 秒",
+                        "雙腳跳過小障礙物": "尚無法雙腳跳過小障礙物",
+                        "原地踮腳尖走": "原地踮腳尖行走尚不平穩",
+                        "用三根手指握住筆": "握筆姿勢尚未成熟",
+                        "模仿畫圓圈": "尚不會模仿畫圓圈",
+                        "疊 8–9 塊積木": "尚無法穩固疊高 8–9 塊積木",
+                        "解開大鈕扣": "尚無法解開大鈕扣",
+                        "講自己的姓和名": "尚無法完整講出自己的全名",
+                        "說出自己的性別": "尚無法說出自己的性別",
+                        "理解你的、我的": "尚未完全理解你的、我的之概念",
+                        "說出 4–5 個單字的句子": "尚無法說出 4–5 個單字的句子",
+                        "幼兒說話大部分可被外人理解": "口語表達尚難以被多數人理解",
+                        "會自己穿衣服（套頭、套手）": "尚無法自行套頭穿衣",
+                        "白天不尿褲子": "白天仍偶有尿褲子情形",
+                        "與同伴一起玩（輪流概念開始）": "尚缺乏與同伴輪流共玩的概念",
+                        "會自己洗手並擦乾": "尚無法獨立完成洗手與擦乾",
+
+                        // 48 個月
+                        "單腳連續跳 3–5 下": "尚無法單腳連續跳 3 下以上",
+                        "單腳站立 5 秒": "單腳站立尚無法維持 5 秒",
+                        "下樓梯可交換腳": "下樓梯尚無法兩腳輪替前進",
+                        "過肩投擲球": "尚不會過肩投擲球的動作",
+                        "可跳遠 30–45 公分": "原地跳遠尚不及 30 公分",
+                        "模仿畫十字與正方形": "尚無法仿畫十字與正方形",
+                        "畫人有 2–3 個可辨識部位": "尚無法畫出 2–3 個可辨識部位的人像",
+                        "會用兒童剪刀剪紙（直線）": "尚無法使用兒童剪刀沿直線剪紙",
+                        "拇指對指動作": "尚無法順暢作拇指對指的動作",
+                        "可解開鈕扣": "依然無法獨立解開鈕扣",
+                        "數數 1–4": "尚無法順利從 1 數到 4",
+                        "辨認紅、黃、綠等基本顏色": "對基本顏色辨認尚不熟練",
+                        "使用疑問句（誰、什麼、哪裡）": "尚不善於使用疑問句進行探索",
+                        "理解空間概念（裡外上下）": "對裡外上下空間概念尚不熟悉",
+                        "能依指示拿取 3 個以內物品": "尚無法依指示準確拿取 3 個以內物品",
+                        "會自己穿襪子": "尚無法自行穿好襪子",
+                        "用牙刷刷牙": "尚無法獨立使用牙刷刷牙",
+                        "進行假扮遊戲（imaginary play）": "尚未發展出明確的假扮遊戲",
+                        "懂得與同伴分享": "與同伴分享的社交技巧尚不足",
+
+                        // 60 個月
+                        "單腳站立 10 秒": "單腳站立尚無法維持 10 秒",
+                        "腳跟接腳尖向前走 2–3 步（tandem walk）": "尚無法以腳跟接腳尖方式向前走",
+                        "做小跳步（skipping）": "尚不會做小跳步（skipping）",
+                        "可雙腳跳遠 45 公分以上": "雙腳跳遠尚不及 45 公分",
+                        "不需牽扶可自行上下樓梯": "上下樓梯仍需牽扶",
+                        "模仿畫正三角形": "尚無法模仿畫出三角形",
+                        "畫人至少 4–6 個可辨識部位": "尚無法畫出 4 個以上可辨識部位的人像",
+                        "熟練使用剪刀沿線剪紙": "使用剪刀沿線剪紙尚不熟練",
+                        "模仿寫出簡單文字或數字": "尚無法模仿寫出簡單文字或數字",
+                        "數數 1–10": "尚無法流利從 1 數到 10",
+                        "說出 8–10 個單字的句子": "尚無法說出 8–10 個單字的長句",
+                        "覆誦 5 個阿拉伯數字（如 96257）": "尚無法覆誦 5 個阿拉伯數字",
+                        "能說出器官功能（眼睛看、嘴巴吃）": "尚無法清楚說明基本器官功能",
+                        "說出兩種常見物品的用途": "尚無法說出兩種常見物品的用途",
+                        "描述日常發生的事情": "尚缺乏敘述日常事件的組織能力",
+                        "會拉拉鍊、解扣子": "拉拉鍊、解扣子尚不熟練",
+                        "遵守團體遊戲規則（如捉迷藏）": "團體遊戲時尚難遵守規則",
+                        "會自己用牙刷刷牙、洗臉": "尚無法獨立完成刷牙與洗臉",
+                        "對同伴情緒有同理反應": "對同伴情緒的同理反應尚少"
+                    };
+
+                    // Fallback：對應不到字典的項目，採通用前綴
+                    const toFailPhrase = (item) => {
+                        if (failPhrases[item]) return failPhrases[item];
+                        return '尚未達成「' + item + '」';
+                    };
+
+                    const formatNarrative = (domainName, domainKey, verbCan) => {
+                        const passed = [];
+                        const failed = [];
+
+                        this.ages.forEach(age => {
+                            const items = milestoneData[age][domainKey] || [];
+                            items.forEach(item => {
+                                const state = this.assessments[domainKey][age][item];
+                                if (state === 'pass') passed.push(item);
+                                if (state === 'fail') failed.push(item);
+                            });
+                        });
+
+                        if (passed.length === 0 && failed.length === 0) return '';
+
+                        let line = `${domainName}方面：`;
+
+                        if (failed.length === 0) {
+                            line += `目前${verbCan}${passed.join('、')}。`;
+                            return line;
+                        }
+
+                        if (passed.length > 0) {
+                            line += `目前${verbCan}${passed.join('、')}`;
+                        }
+                        if (failed.length > 0) {
+                            if (passed.length > 0) line += '；';
+                            const failedParts = failed.map(toFailPhrase);
+                            line += '目前' + failedParts.join('、');
+                        }
+                        line += '。';
+                        return line;
+                    };
+
+                    const grossDesc = formatNarrative('粗大動作', 'gross', '可');
+                    if (grossDesc) parts.push(grossDesc);
+
+                    const fineDesc = formatNarrative('精細動作', 'fine', '可');
+                    if (fineDesc) parts.push(fineDesc);
+
+                    const langDesc = formatNarrative('語言', 'lang', '可');
+                    if (langDesc) parts.push(langDesc);
+
+                    const socialDesc = formatNarrative('情緒互動及日常生活', 'social', '可自己');
+                    if (socialDesc) parts.push(socialDesc);
+
+                    return parts.join('\n');
+                },
+
+                copyText(text, btnId) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const btn = document.getElementById(btnId);
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = `<svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-green-700">已複製</span>`;
+                        btn.classList.add('bg-green-50', 'border-green-200');
+                        btn.classList.remove('bg-white', 'border-zinc-200');
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.classList.remove('bg-green-50', 'border-green-200');
+                            btn.classList.add('bg-white', 'border-zinc-200');
+                        }, 2000);
+                    });
+                }
+            }));
+        });
+    </script>
+</body>
+
+</html>
