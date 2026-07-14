@@ -43,11 +43,13 @@
         select,input{min-height:var(--control)}
         textarea{min-height:94px;resize:vertical;line-height:1.65}
         input:hover,select:hover,textarea:hover{border-color:#aebbcb}
-        input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
+        input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
         button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         input:disabled,select:disabled,textarea:disabled{color:var(--faint);background:#f1f4f7;cursor:not-allowed}
         a{color:var(--accent);text-underline-offset:3px}
+        button,a,input[type="checkbox"],input[type="radio"]{touch-action:manipulation}
         h1,h2,h3,h4,p{margin-top:0}
+        h1,h2,h3{text-wrap:balance}
         h1{margin-bottom:2px;font-size:17px;font-weight:650;line-height:1.4;letter-spacing:-.01em}
         h2{margin-bottom:3px;font-size:17px;font-weight:650;line-height:1.4;letter-spacing:-.01em}
         h3{margin-bottom:4px;font-size:15px;font-weight:650;line-height:1.5}
@@ -72,7 +74,7 @@
         .nav-list a{position:relative;display:grid;grid-template-columns:30px minmax(0,1fr) 10px;align-items:center;gap:10px;min-height:42px;padding:6px 12px;color:var(--muted);border-radius:9px;text-decoration:none;font-weight:550;line-height:1.35;transition:background .13s ease,color .13s ease}
         .nav-list a:hover{background:#eef1f5;color:var(--ink)}
         .nav-list a.active{background:var(--accent-soft);color:var(--ink);font-weight:650}
-        .nav-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:26px;border:1.5px solid var(--line-strong);border-radius:999px;color:var(--faint);background:var(--surface);font-size:11.5px;font-weight:650;font-variant-numeric:tabular-nums;transition:all .13s ease}
+        .nav-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:26px;border:1.5px solid var(--line-strong);border-radius:999px;color:var(--faint);background:var(--surface);font-size:11.5px;font-weight:650;font-variant-numeric:tabular-nums;transition:border-color .13s ease,color .13s ease,background-color .13s ease,box-shadow .13s ease}
         .nav-list a.active .nav-num{color:#fff;background:var(--accent);border-color:var(--accent)}
         .nav-dot{width:8px;height:8px;border-radius:50%;background:#d3dae2}
         .nav-dot.ready{background:var(--success)}
@@ -279,15 +281,22 @@
         .overview-panel{padding:14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
         .overview-panel ul{margin:7px 0 0;padding-left:20px}
 
-        .output-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+        .output-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg)}
         .output-toolbar p{margin:0;color:var(--muted);font-size:13px}
-        .output-grid{display:grid;gap:14px}
-        .output-block{border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface)}
-        .output-head{padding:9px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--bg);border-bottom:1px solid var(--line)}
-        .output-head h3{margin:0;font-size:14px}
-        .output-head .button{min-height:32px;padding:4px 11px;font-size:12.5px}
-        .output-block textarea{min-height:165px;border:0;border-radius:0;padding:13px;font-size:13.5px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Noto Sans TC",monospace;line-height:1.6}
-        .output-block textarea:focus{box-shadow:none}
+        .output-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px}
+        .output-block{min-width:0;border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface);box-shadow:0 3px 12px rgba(26,48,71,.06)}
+        .output-head{min-height:76px;padding:12px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#fbfcfd;border-bottom:1px solid var(--line)}
+        .output-head h3{margin:0;font-size:14px;line-height:1.45}
+        .output-head .help{display:block;margin-top:3px}
+        .output-actions{display:flex;flex:0 0 auto;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px}
+        .output-head .button{min-height:32px;padding:4px 10px;font-size:12px;white-space:nowrap}
+        .output-regenerate{color:var(--danger)}
+        .copy-output.copy-success{border-color:var(--success-line);background:var(--success-bg);color:var(--success)}
+        .output-block textarea{width:100%;min-height:360px;resize:vertical;border:0;border-radius:0;padding:15px;font-size:13.5px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Noto Sans TC",monospace;line-height:1.65;background:var(--surface)}
+        .output-block textarea:focus-visible{background:#fff;box-shadow:inset 0 0 0 2px var(--accent)}
+        .output-footer{min-height:38px;padding:7px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);background:#fbfcfd;color:var(--muted);font-size:12px}
+        .character-count{font-variant-numeric:tabular-nums}
+        .character-count.over-limit{color:var(--danger);font-weight:700}
         .family-output{border-color:var(--success-line)}
         .family-output .output-head{background:var(--success-bg)}
         .live{min-height:23px;color:var(--success);font-weight:600;font-size:13px}
@@ -374,8 +383,10 @@
 
         /* ── Responsive ─────────────────────────── */
         @media(max-width:1120px){.app-shell{grid-template-columns:200px minmax(0,1fr);gap:20px}.review-main{grid-template-columns:minmax(180px,1fr) 350px}.tool-cards{grid-template-columns:1fr}.classification-list{grid-template-columns:repeat(3,minmax(0,1fr))}.care-grid{grid-template-columns:1fr}.care-card h4{min-height:auto}.concern-picker{grid-template-columns:repeat(3,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr 300px}.icf-grid{grid-template-columns:1fr}}
-        @media(max-width:840px){.topbar-inner,.app-shell{width:min(100% - 28px,760px)}.topbar-inner{align-items:flex-start;flex-direction:column;gap:8px}.privacy{text-align:left;white-space:normal}.app-shell{grid-template-columns:minmax(0,1fr);padding-top:16px}.workflow,.workflow>*,section.card{min-width:0;max-width:100%}.side-rail{position:static}.rail-title,.rail-note{display:none}.nav-list{grid-template-columns:repeat(3,minmax(0,1fr))}.nav-list a{grid-template-columns:auto minmax(0,1fr) 8px;min-height:38px;padding:5px 8px;font-size:12.5px}.review-main{grid-template-columns:1fr}.grid.four,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.hpa-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr))}.hpa-item-head{grid-template-columns:1fr}.domain-head{position:static;align-items:flex-start}.step-bar .button{min-width:0;flex:1}.result-domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-        @media(max-width:560px){body{font-size:14px}.topbar-inner{padding:12px 0}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr))}.card-head{padding:14px;flex-direction:column}.card-body{padding:14px}.head-actions{width:100%}.grid.two,.grid.three,.grid.four,.probe-grid,.concern-grid,.overview-grid,.recommend-grid,.education-grid,.standard-grid,.guidance-grid,.result-domain-grid{grid-template-columns:1fr}.classification-list{grid-template-columns:1fr}.classification-option span{min-height:0}.concern-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr;gap:7px}.review-summary{grid-template-columns:1fr}.clinical-alert{position:static;grid-template-columns:4px minmax(0,1fr)}.clinical-alert .button{grid-column:2}.segmented.cols4 span{padding-inline:4px;font-size:12.5px}}
+        @media(max-width:840px){.topbar-inner,.app-shell{width:min(100% - 28px,760px)}.topbar-inner{align-items:flex-start;flex-direction:column;gap:8px}.privacy{text-align:left;white-space:normal}.app-shell{grid-template-columns:minmax(0,1fr);padding-top:16px}.workflow,.workflow>*,section.card{min-width:0;max-width:100%}.side-rail{position:static}.rail-title,.rail-note{display:none}.nav-list{grid-template-columns:repeat(3,minmax(0,1fr))}.nav-list a{grid-template-columns:auto minmax(0,1fr) 8px;min-height:38px;padding:5px 8px;font-size:12.5px}.review-main{grid-template-columns:1fr}.grid.four,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.hpa-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr))}.hpa-item-head{grid-template-columns:1fr}.domain-head{position:static;align-items:flex-start}.step-bar .button{min-width:0;flex:1}.result-domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.output-grid{grid-template-columns:1fr}}
+        @media(max-width:560px){body{font-size:14px}.topbar-inner{padding:12px 0}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr))}.card-head{padding:14px;flex-direction:column}.card-body{padding:14px}.head-actions{width:100%}.grid.two,.grid.three,.grid.four,.probe-grid,.concern-grid,.overview-grid,.recommend-grid,.education-grid,.standard-grid,.guidance-grid,.result-domain-grid{grid-template-columns:1fr}.classification-list{grid-template-columns:1fr}.classification-option span{min-height:0}.concern-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr;gap:7px}.review-summary{grid-template-columns:1fr}.clinical-alert{position:static;grid-template-columns:4px minmax(0,1fr)}.clinical-alert .button{grid-column:2}.segmented.cols4 span{padding-inline:4px;font-size:12.5px}.output-toolbar{align-items:stretch}.output-toolbar .button{width:100%}.output-head{min-height:0;flex-direction:column}.output-actions{width:100%;justify-content:flex-start}.output-block textarea{min-height:300px}}
+        .skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:8px 12px;border-radius:6px;background:var(--accent-deep);color:#fff;transform:translateY(-150%);text-decoration:none}
+        .skip-link:focus{transform:translateY(0)}
         @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
         .print-mirror{display:none;padding:13px;white-space:pre-wrap;line-height:1.7}
         @media print{body{background:#fff}.topbar,.side-rail,.safety,.step-bar,.card:not(#outputs),.output-toolbar,.output-head .button,.references,#browser-warning,#restore-note{display:none!important}body.stepper .workflow>section.card#outputs{display:block!important}.app-shell{display:block;width:100%;padding:0}#outputs{border:0;box-shadow:none}.output-block{break-inside:avoid}.output-block textarea{display:none!important}.print-mirror{display:block!important}.no-print{display:none!important}body[data-print="family"] .output-block:not(.family-output){display:none!important}}
@@ -383,6 +394,7 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
     <div id="browser-warning" style="display:none;padding:14px 18px;background:#a43838;color:#fff;font-weight:800;line-height:1.6">此瀏覽器版本過舊，本工具將無法正常運作；請改用近年版本的 Chrome、Edge 或 Safari 開啟。</div>
     <script>
     (function(){var ok=true;try{new Function('var x={};return x?.y')}catch(e){ok=false}
@@ -391,7 +403,7 @@
     </script>
     <header class="topbar main-workflow">
         <div class="topbar-inner">
-            <div><h1>兒童發展聯合評估｜復健科</h1><p>異常優先、未評明列；同一份結構化資料快速完成門診病歷、復健科聯評報告與家屬說明。</p></div>
+            <div><h1>兒童發展聯合評估｜復健科</h1><p>異常優先、未評不輸出；同一份結構化資料快速完成門診病歷、復健科聯評報告與家屬說明。</p></div>
             <div class="privacy"><strong>單機離線｜不串病歷｜不使用 AI</strong>資料僅暫存於此分頁（防誤按重新整理）；關閉分頁或按「開始新個案」即清除</div>
         </div>
     </header>
@@ -420,7 +432,7 @@
             <div class="rail-card rail-note">發展核心採國健署九份正式兒童發展篩檢量表；結果為篩檢與臨床決策支援，不等同診斷。</div>
         </aside>
 
-        <main class="workflow">
+        <main class="workflow" id="main-content">
             <div class="callout success hidden" id="restore-note">已還原此分頁先前輸入的資料；若要評估新個案，請按左側「開始新個案」。</div>
             <div class="clinical-alert hidden" id="clinical-alert" role="alert"><div><strong id="clinical-alert-title">本次有需優先處理的紅旗</strong><span id="clinical-alert-text"></span></div><button class="button secondary" type="button" data-jump="overview">前往核對</button></div>
             <div class="safety" role="note"><div><strong>使用原則</strong>系統依精確實足／矯正月齡自動選取國健署九份量表之一，逐題呈現施測方式與通過標準並依官方權重計分。ASD／ADHD 無疑慮時不顯示、不評分，也不寫入病歷。</div></div>
@@ -607,17 +619,20 @@
             </section>
 
             <section class="card" id="outputs" aria-labelledby="outputs-title">
-                <div class="card-head"><div><h2 id="outputs-title">5. 門診 Objective 與復健科聯評子報告</h2><p>兩份文字共用同一組客觀結果，逐項列出達標、未達標、未評及理學檢查狀態，不產生 SOAP 或 Assessment。</p></div><span class="status warn" id="output-status">尚未產生</span></div>
+                <div class="card-head"><div><h2 id="outputs-title">5. 門診 Objective 與復健科聯評子報告</h2><p>Objective 採英文病歷格式；聯合評估報告採中文客觀敘述。未評項目一律不列入。</p></div><span class="status" id="output-status">尚未產生</span></div>
                 <div class="card-body">
-                    <div class="review-gate" id="review-gate">
-                        <strong>貼入病歷前核對</strong><p class="help" id="review-gate-hint">先產生文字；系統會彙整發展逐題、理學異常與未評項目供最後核對。</p>
-                        <div class="review-summary"><div><span>發展未達標</span><strong id="review-redflags">—</strong></div><div><span>理學異常</span><strong id="review-concerns">—</strong></div><div><span>尚待補評</span><strong id="review-pending">—</strong></div></div>
-                        <label class="inline-check" style="padding:4px 0"><input id="final-review-confirmed" type="checkbox" disabled><span><strong>我已核對個案代號、年齡、發展逐題、理學檢查與未評項目</strong>，確認客觀紀錄可複製至本次個案病歷。</span></label>
-                    </div>
-                    <div class="output-toolbar"><p id="output-hint">可隨時產生草稿；完成上方核對後才開放複製。</p><div class="head-actions"><button class="button secondary copy-output" type="button" data-copy="all" disabled>複製兩份客觀紀錄</button><button class="button primary" id="generate-outputs" type="button">產生／更新客觀紀錄</button></div></div>
+                    <div class="output-toolbar"><p id="output-hint">依目前已完成的評估結果產生兩份可編輯文字。</p><button class="button primary" id="generate-outputs" type="button">產生／更新兩份報告</button></div>
                     <div class="output-grid">
-                        <div class="output-block"><div class="output-head"><div><h3>門診病歷 Objective</h3><span class="help">條列逐項客觀結果；不含 Assessment 或 Plan。</span></div><button class="button secondary copy-output" type="button" data-copy="objective-output" disabled>複製 Objective</button></div><textarea id="objective-output" aria-label="門診病歷 Objective"></textarea><div class="print-mirror"></div></div>
-                        <div class="output-block"><div class="output-head"><div><h3>復健科聯評子報告</h3><span class="help">僅描述實際施測與觀察結果，不加入主觀判斷。</span></div><button class="button secondary copy-output" type="button" data-copy="subreport-output" disabled>複製聯評子報告</button></div><textarea id="subreport-output" aria-label="復健科聯評子報告"></textarea><div class="print-mirror"></div></div>
+                        <article class="output-block" data-output="objective">
+                            <div class="output-head"><div><h3>1. 病歷 Objective 內容</h3><span class="help">English medical record format · unassessed items omitted</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="objective">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="objective-output" disabled>複製</button></div></div>
+                            <textarea id="objective-output" name="objective-output" aria-label="病歷 Objective 內容" autocomplete="off" spellcheck="false"></textarea><div class="print-mirror"></div>
+                            <div class="output-footer"><span>可直接修改後複製至病歷</span><span class="character-count" id="objective-count">0 字</span></div>
+                        </article>
+                        <article class="output-block" data-output="subreport">
+                            <div class="output-head"><div><h3>2. 聯合評估統合報告（敘述型）</h3><span class="help">中文客觀描述 · 不加入主觀判斷</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="subreport">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="subreport-output" disabled>複製</button></div></div>
+                            <textarea id="subreport-output" name="subreport-output" aria-label="聯合評估統合報告" autocomplete="off" spellcheck="false"></textarea><div class="print-mirror"></div>
+                            <div class="output-footer"><span>建議 500 字內，超過仍可使用</span><span class="character-count" id="subreport-count">0 / 500 字</span></div>
+                        </article>
                     </div>
                     <div class="live" id="copy-live" role="status" aria-live="polite"></div>
                 </div>
@@ -631,7 +646,7 @@
             <div class="context-panel"><h2>即時摘要</h2><div class="context-panel-body"><div class="context-metrics"><div class="context-metric"><span>異常／關注</span><strong id="context-concerns">0</strong></div><div class="context-metric"><span>待完成</span><strong id="context-pending">0</strong></div></div><ul class="context-list" id="context-key-items" style="margin-top:10px"></ul></div></div>
             <button class="button primary" type="button" data-jump="overview">核對整體結果</button>
             <button class="button secondary" type="button" data-jump="outputs">產生病歷與聯評報告</button>
-            <div class="rail-note">篩檢結果不等於診斷；貼入病歷前需完成最後核對。</div>
+            <div class="rail-note">篩檢結果不等於診斷；貼入病歷前請再次核對個案與內容。</div>
         </aside>
     </div>
 
@@ -724,7 +739,7 @@
         {title:'醫療、環境與家庭',items:[['hearing','聽力評估'],['vision','視力／眼科評估'],['neuro-ref','小兒神經／影像／腦波評估'],['genetic','遺傳／代謝評估'],['ortho-ref','骨科評估'],['assistive','輔具、支架或環境調整'],['school','學校／托育溝通與支持'],['home','居家活動與家長諮詢']]}
     ];
 
-    const state={age:null,correctionTouched:false,outputsFresh:false,hpaResponses:{},rows:{mas:[],strength:[],rom:[]},tools:{},lastFormId:null,formSwitchNote:null,manualEdits:false,restoring:false};
+    const state={age:null,correctionTouched:false,outputsFresh:false,outputFresh:{objective:false,subreport:false},outputEdited:{objective:false,subreport:false},hpaResponses:{},rows:{mas:[],strength:[],rom:[]},tools:{},lastFormId:null,formSwitchNote:null,restoring:false};
     const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
     const parseDate=t=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(t||''))return null;const [y,m,d]=t.split('-').map(Number),x=new Date(y,m-1,d,12);return x.getFullYear()===y&&x.getMonth()===m-1&&x.getDate()===d?x:null};
     const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
@@ -733,14 +748,14 @@
     const ageText=a=>a?`${a.years} 歲 ${a.monthPart} 個月 ${a.days} 天`:'年齡未確認';
     const ageEnglish=a=>a?`${a.years}y ${a.monthPart}m`:'age not confirmed';
     function setStatus(el,text,kind=''){if(!el)return;el.textContent=text;el.className=`status${kind?' '+kind:''}`}
-    function markStale(){saveState();const review=$('final-review-confirmed');if(review){review.checked=false;review.disabled=true;$('review-gate')?.classList.remove('ready')}qsa('.copy-output').forEach(b=>b.disabled=true);if(!state.outputsFresh)return;state.outputsFresh=false;setStatus($('output-status'),'資料已變更','warn');$('output-hint').textContent='來源資料已變更，請重新產生並完成核對後再複製。';updateProgress()}
+    function markStale(){const hadOutput=OUTPUT_BLOCKS.some(([,id])=>$(id)?.value.trim());state.outputFresh={objective:false,subreport:false};state.outputsFresh=false;refreshOutputControls();if(hadOutput){setStatus($('output-status'),'資料已變更','warn');$('output-hint').textContent='來源資料已變更；請重新產生報告後再複製。'}else{setStatus($('output-status'),'尚未產生');$('output-hint').textContent='依目前已完成的評估結果產生兩份可編輯文字。'}saveState();updateProgress()}
 
     const SAVE_KEY='devjoint-session-v1';
     const PENDING_SAVED=(()=>{try{return sessionStorage.getItem(SAVE_KEY)}catch(_){return null}})();
     function snapshotControls(){const out={};qsa('input[id],select[id],textarea[id]').forEach(el=>{if(el.type==='radio')return;if(el.type==='checkbox')out[el.id]={c:el.checked};else out[el.id]={v:el.value}});return out}
     function snapshotRadios(){const out={};qsa('input[type=radio]:checked').forEach(el=>{if(el.name&&!el.name.startsWith('hpa-'))out[el.name]=el.value});return out}
     function snapshotFlags(){const out=[];qsa('input[type=checkbox]:checked').forEach(el=>{if(el.id)return;if(el.dataset.careDelay!==undefined)out.push(`care|${el.value}`);else if(el.dataset.strengthFeature!==undefined)out.push(`str|${el.value}`);else if(el.dataset.examFeature)out.push(`exam|${el.dataset.examFeature}|${el.value}`)});return out}
-    function saveState(){if(state.restoring)return;try{sessionStorage.setItem(SAVE_KEY,JSON.stringify({v:1,hpaResponses:state.hpaResponses,rows:state.rows,tools:state.tools,correctionTouched:state.correctionTouched,lastFormId:state.lastFormId,manualEdits:state.manualEdits,controls:snapshotControls(),radios:snapshotRadios(),flags:snapshotFlags()}))}catch(_){}}
+    function saveState(){if(state.restoring)return;try{sessionStorage.setItem(SAVE_KEY,JSON.stringify({v:2,hpaResponses:state.hpaResponses,rows:state.rows,tools:state.tools,correctionTouched:state.correctionTouched,lastFormId:state.lastFormId,outputEdited:state.outputEdited,controls:snapshotControls(),radios:snapshotRadios(),flags:snapshotFlags()}))}catch(_){}}
     function exportCase(){
         saveState();let payload=null;try{payload=JSON.parse(sessionStorage.getItem(SAVE_KEY)||'null')}catch(_){}
         if(!payload)return alert('目前沒有可匯出的個案資料。');
@@ -758,9 +773,8 @@
         let saved=null;try{saved=JSON.parse(PENDING_SAVED||'null')}catch(_){return false}
         if(!saved||!saved.controls)return false;state.restoring=true;
         try{
-            state.hpaResponses=saved.hpaResponses||{};state.rows=Object.assign({mas:[],strength:[],rom:[]},saved.rows||{});state.tools=saved.tools||{};state.correctionTouched=!!saved.correctionTouched;state.lastFormId=saved.lastFormId||null;state.manualEdits=!!saved.manualEdits;
+            state.hpaResponses=saved.hpaResponses||{};state.rows=Object.assign({mas:[],strength:[],rom:[]},saved.rows||{});state.tools=saved.tools||{};state.correctionTouched=!!saved.correctionTouched;state.lastFormId=saved.lastFormId||null;state.outputEdited=Object.assign({objective:false,subreport:false},saved.outputEdited||(saved.manualEdits?{objective:true,subreport:true}:{}));
             Object.entries(saved.controls).forEach(([id,rec])=>{const el=$(id);if(!el)return;if('c'in rec)el.checked=rec.c;else el.value=rec.v});
-            if($('final-review-confirmed')){$('final-review-confirmed').checked=false;$('final-review-confirmed').disabled=true}
             Object.entries(saved.radios||{}).forEach(([name,val])=>{const el=document.querySelector(`input[name="${name}"][value="${val}"]`);if(el)el.checked=true});
             (saved.flags||[]).forEach(flag=>{const p=flag.split('|');let el=null;if(p[0]==='care')el=document.querySelector(`[data-care-delay][value="${p[1]}"]`);if(p[0]==='str')el=document.querySelector(`[data-strength-feature][value="${p[1]}"]`);if(p[0]==='exam')el=document.querySelector(`[data-exam-feature="${p[1]}"][value="${p[2]}"]`);if(el)el.checked=true});
             updateAge();
@@ -768,7 +782,7 @@
             getExam().forEach(item=>{const d=$(`exam-detail-${item.id}`);if(d)d.classList.toggle('hidden',item.result!=='abnormal')});
             const care=getCare();$('care-feeding-note').classList.toggle('hidden',care.feeding!=='yes');$('care-delay-detail').classList.toggle('hidden',care.delay!=='yes');$('care-attention-note').classList.toggle('hidden',care.attention!=='yes');
             ['asd','adhd'].forEach(type=>{const on=$(`${type}-concern`).checked;$(`open-${type}`).disabled=!on;$(`${type}-concern-card`).classList.toggle('active',on)});
-            updateMchatControls();updateRater('parent');updateRater('teacher');renderCPModule();updateSpecialtyResults();syncExamTriggers();updateAll();
+            updateMchatControls();updateRater('parent');updateRater('teacher');renderCPModule();updateSpecialtyResults();syncExamTriggers();updateAll();refreshOutputControls();updateOutputStatus();
         }finally{state.restoring=false}
         return true;
     }
@@ -1014,7 +1028,6 @@
         $('context-age').textContent=state.age?`${ageText(state.age.chronological)}${state.age.usingCorrected?`｜矯正 ${ageText(state.age.corrected)}`:''}`:'年齡待確認';$('context-case').textContent=[value('case-label')?`個案 ${value('case-label')}`:'未填個案代號',focus.source||'任務待確認'].join('｜');
         $('context-concerns').textContent=String(concerns.length);$('context-pending').textContent=String(pending.length);$('context-key-items').innerHTML=(concerns.slice(0,4).map(x=>`<li>${escapeHTML(x)}</li>`).join('')||'<li>目前無標記關注</li>');
         $('context-alert-panel').classList.toggle('hidden',redflagLabels.length===0);$('context-redflags').innerHTML=redflagLabels.map(x=>`<li>${escapeHTML(x)}</li>`).join('');
-        $('review-redflags').textContent=String(failed.length);$('review-concerns').textContent=String(examAbnormal.length);$('review-pending').textContent=String(pending.length);$('review-gate-hint').textContent=pending.length?'仍可產生草稿，但有未完成項目；未評內容會明列在客觀紀錄中。':'必要項目均已完成；產生文字後請做最後內容核對。';
         refreshHpaItemStates();syncExamTriggers();updateProgress();
     }
 
@@ -1055,48 +1068,55 @@
         if(f.activity)lines.push(`Activity limitation (ICF): ${f.activity}.`);if(f.participation)lines.push(`Participation restriction (ICF): ${f.participation}.`);if(f.environment)lines.push(`Environmental factors (ICF): ${f.environment}.`);
         return lines.join('\n');
     }
-    const resultStatusLabel={pass:'達標',fail:'未達標',unassessed:'未評'};
-    const examStatusLabel={normal:'正常',abnormal:'異常',untestable:'無法測得',unassessed:'未評'};
-    const yesNoLabel={yes:'是',no:'否',unknown:'未確認'};
+    const resultStatusLabel={pass:'達標',fail:'未達標'};
+    const examStatusLabel={normal:'正常',abnormal:'異常',untestable:'無法測得'};
+    const objectiveDomainLabel={gross:'Gross motor',fine:'Fine motor',cognitive_language:'Cognitive & language',cognitive_language_social:'Cognitive, language & social',social:'Social interaction'};
+    const objectiveExamStatus={normal:'normal',abnormal:'abnormal',untestable:'not testable due to limited cooperation'};
     function specialtyObjectiveLines(){
         const lines=[];
-        if($('asd-concern').checked){const c=asdClinicalResult(),mStatus=value('mchat-status'),mParts=[`施測狀態：${mStatus==='completed'?'已完成':'未施測／未記錄'}`];if(mStatus==='completed'){mParts.push(`初篩總分 ${value('mchat-score')||'未填'}/20`);if(value('mchat-followup')!=='')mParts.push(`Follow-Up 後陽性題數 ${value('mchat-followup')}/7`)}lines.push(`[ASD 客觀資料] M-CHAT-R/F ${mParts.join('；')}`);lines.push(`[ASD 客觀資料] 臨床準則 A 類確認 ${c.a??0}/3 項；B 類確認 ${c.b??0}/4 項；整份準則${c.complete?'已逐項記錄':'尚未完成'}`)}
-        if($('adhd-concern').checked){const rater=prefix=>value(`${prefix}-status`)==='completed'?`注意力不足 ${value(`${prefix}-inattention`)||'未填'}/9、過動衝動 ${value(`${prefix}-hyper`)||'未填'}/9`:'未完成';lines.push(`[ADHD 客觀資料] 家長量表：${rater('parent')}；教師量表：${rater('teacher')}`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`));lines.push(`[ADHD 客觀資料] 其他條件：是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項、未確認 ${vals.filter(x=>x==='unknown').length} 項`)}
+        if($('asd-concern').checked){const c=asdClinicalResult(),mParts=[];if(value('mchat-status')==='completed'&&value('mchat-score')!==''){mParts.push(`初篩總分 ${value('mchat-score')}/20`);if(value('mchat-followup')!=='')mParts.push(`Follow-Up 後陽性題數 ${value('mchat-followup')}/7`)}if(mParts.length)lines.push(`ASD 客觀資料：M-CHAT-R/F ${mParts.join('；')}`);const vals=ASD_CRITERIA.map(x=>value(`asdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ASD 客觀資料：臨床準則已記錄 ${known.length} 項（是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項）${c.complete?`；A 類 ${c.a}/3 項、B 類 ${c.b}/4 項`:''}`)}
+        if($('adhd-concern').checked){const rater=[];if(value('parent-status')==='completed')rater.push(`家長量表注意力不足 ${value('parent-inattention')}/9、過動衝動 ${value('parent-hyper')}/9`);if(value('teacher-status')==='completed')rater.push(`教師量表注意力不足 ${value('teacher-inattention')}/9、過動衝動 ${value('teacher-hyper')}/9`);if(rater.length)lines.push(`ADHD 客觀資料：${rater.join('；')}`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ADHD 客觀資料：其他條件已記錄 ${known.length} 項（是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項）`)}
+        return lines;
+    }
+    function specialtyObjectiveLinesEnglish(){
+        const lines=[];
+        if($('asd-concern').checked){if(value('mchat-status')==='completed'&&value('mchat-score')!==''){let text=`M-CHAT-R/F initial score ${value('mchat-score')}/20`;if(value('mchat-followup')!=='')text+=`; Follow-Up positive items ${value('mchat-followup')}/7`;lines.push(text+'.')}const c=asdClinicalResult(),vals=ASD_CRITERIA.map(x=>value(`asdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ASD clinical criteria recorded: ${vals.filter(x=>x==='yes').length} yes and ${vals.filter(x=>x==='no').length} no${c.complete?`; category A ${c.a}/3 and category B ${c.b}/4`:''}.`)}
+        if($('adhd-concern').checked){if(value('parent-status')==='completed')lines.push(`Parent ADHD rating: inattention ${value('parent-inattention')}/9; hyperactivity/impulsivity ${value('parent-hyper')}/9.`);if(value('teacher-status')==='completed')lines.push(`Teacher ADHD rating: inattention ${value('teacher-inattention')}/9; hyperactivity/impulsivity ${value('teacher-hyper')}/9.`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`Additional ADHD conditions recorded: ${vals.filter(x=>x==='yes').length} yes and ${vals.filter(x=>x==='no').length} no.`)}
         return lines;
     }
     function buildObjective(){
-        const form=currentHpaForm(),dev=getDev(),items=dev.flatMap(x=>x.items),exam=getExam().filter(x=>x.result!=='unassessed'),caseLabel=(value('case-label')||'').trim(),lines=['【基本資料】'];
-        lines.push(`- 評估日期：${value('assessment-date')||'未填'}${caseLabel?`；個案代號：${caseLabel}`:''}`);lines.push(`- 年齡：${state.age?`實足 ${ageText(state.age.chronological)}${state.age.usingCorrected?`；矯正 ${ageText(state.age.corrected)}`:''}`:'未確認'}`);lines.push(`- 資料來源：${value('informant')}`);
-        lines.push('\n【國健署發展篩檢】');if(form){lines.push(`- 量表：${form.label}`);dev.forEach(d=>lines.push(`- [領域] ${d.label} ${d.score}/${d.max}；界值 ${d.cutoff}；${d.complete?(d.score>=d.cutoff?'達通過界值':'未達通過界值'):'未完成'}`));items.forEach(x=>lines.push(`- [${resultStatusLabel[x.result]}] ${resultItemText(x)}${x.quality?'；表現品質需留意':''}`))}else lines.push(`- ${state.age?'目前月齡無對應國健署九份量表':'年齡未確認，尚未選取量表'}`);
-        lines.push('\n【復健專科理學檢查（選填）】');if(exam.length)exam.forEach(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';lines.push(`- [${examStatusLabel[x.result]}] ${x.label}${detail?`：${detail}`:''}`)});else lines.push('- 本次未記錄。');
-        const specialty=specialtyObjectiveLines();if(specialty.length)lines.push(`\n【ASD／ADHD 客觀資料】\n${specialty.map(x=>`- ${x}`).join('\n')}`);
-        return lines.join('\n');
+        const form=currentHpaForm(),dev=getDev(),exam=getExam().filter(x=>x.result!=='unassessed'),caseLabel=(value('case-label')||'').trim(),lines=['O:'];
+        lines.push(`Assessment date: ${value('assessment-date')||today()}${caseLabel?` | Case: ${caseLabel}`:''}.`);if(state.age)lines.push(`Age: ${ageEnglish(state.age.chronological)}${state.age.usingCorrected?` (corrected age ${ageEnglish(state.age.corrected)})`:''}.`);if(value('informant'))lines.push(`Informant: ${value('informant')}.`);
+        const assessedDomains=form?dev.map(d=>({...d,assessed:d.items.filter(x=>x.result==='pass'||x.result==='fail')})).filter(d=>d.assessed.length):[];
+        if(assessedDomains.length){lines.push('',`HPA developmental screening (${hpaBandEnglish(form)}):`);assessedDomains.forEach(d=>{lines.push(`${objectiveDomainLabel[d.id]||d.label}:`);d.assessed.forEach(x=>lines.push(`  ${x.category}${x.n} ${stripMarker(x.question)}: (${x.result==='pass'?'O / achieved':'X / not achieved'})`));lines.push('')})}
+        if(exam.length){lines.push('Physiatric examination:');exam.forEach(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';lines.push(`  ${examEnglishLabel[x.id]||x.label}: ${objectiveExamStatus[x.result]}${detail?`; details: ${detail}`:''}.`)});lines.push('')}
+        const specialty=specialtyObjectiveLinesEnglish();if(specialty.length){lines.push('ASD/ADHD objective data:');specialty.forEach(x=>lines.push(`  ${x}`))}
+        return lines.join('\n').replace(/\n{3,}/g,'\n\n').trim();
     }
     function buildSubreport(){
-        const form=currentHpaForm(),dev=getDev(),items=dev.flatMap(x=>x.items),exam=getExam().filter(x=>x.result!=='unassessed'),f=clinicalFocus(),caseLabel=(value('case-label')||'').trim(),lines=['【復健科醫師聯合評估子報告｜客觀紀錄】'];
-        lines.push(`一、評估資料\n評估日期：${value('assessment-date')||'未填'}${caseLabel?`；個案代號：${caseLabel}`:''}\n資料來源：${value('informant')}\n年齡：${state.age?`實足 ${ageText(state.age.chronological)}${state.age.usingCorrected?`；矯正 ${ageText(state.age.corrected)}`:''}`:'未確認'}\n評估任務：${f.source||'未確認'}`);
-        const domainLines=form?dev.map(d=>`・${d.label}：${d.score}/${d.max}；界值 ${d.cutoff}；${d.complete?(d.score>=d.cutoff?'達通過界值':'未達通過界值'):'未完成'}`):['・目前無適齡國健署量表結果'];lines.push(`二、國健署發展篩檢領域結果\n${form?`量表：${form.label}\n`:''}${domainLines.join('\n')}`);
-        const itemLines=items.length?items.map(x=>`・[${resultStatusLabel[x.result]}] ${resultItemText(x)}${x.quality?'；表現品質需留意':''}`):['・尚無逐題結果'];lines.push(`三、國健署發展篩檢逐題結果\n${itemLines.join('\n')}`);
-        const examLines=exam.length?exam.map(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';return`・[${examStatusLabel[x.result]}] ${x.label}${detail?`：${detail}`:''}`}):['・本次未記錄（選填）'];lines.push(`四、復健專科理學檢查（選填）\n${examLines.join('\n')}`);
-        const specialty=specialtyObjectiveLines();if(specialty.length)lines.push(`五、ASD／ADHD 已記錄之客觀資料\n${specialty.map(x=>`・${x}`).join('\n')}`);
-        return lines.join('\n\n');
+        const form=currentHpaForm(),dev=getDev(),exam=getExam().filter(x=>x.result!=='unassessed'),caseLabel=(value('case-label')||'').trim(),parts=[];
+        const meta=[`個案於${value('assessment-date')||today()}接受評估`];if(caseLabel)meta.push(`個案代號為${caseLabel}`);if(state.age)meta.push(`實足年齡${ageText(state.age.chronological)}${state.age.usingCorrected?`，矯正年齡${ageText(state.age.corrected)}`:''}`);if(value('informant'))meta.push(`資料來源為${value('informant')}`);parts.push(`${meta.join('，')}。`);
+        const domainParts=form?dev.map(d=>{const assessed=d.items.filter(x=>x.result==='pass'||x.result==='fail');if(!assessed.length)return'';const passed=assessed.filter(x=>x.result==='pass'),failed=assessed.filter(x=>x.result==='fail'),sentences=[];if(passed.length)sentences.push(`已達標項目為${passed.map(x=>`${x.category}${x.n}「${stripMarker(x.question)}」`).join('、')}`);if(failed.length)sentences.push(`未達標項目為${failed.map(x=>`${x.category}${x.n}「${stripMarker(x.question)}」`).join('、')}`);return`${d.label}方面：${sentences.join('；')}。`}).filter(Boolean):[];if(domainParts.length)parts.push(`國健署${form.label}發展篩檢結果：${domainParts.join('')}`);
+        if(exam.length){const examParts=exam.map(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';return`${x.label}${examStatusLabel[x.result]}${detail?`（${detail}）`:''}`});parts.push(`復健專科理學檢查客觀紀錄：${examParts.join('；')}。`)}
+        const specialty=specialtyObjectiveLines();if(specialty.length)parts.push(`${specialty.join('；')}。`);
+        return parts.join('\n\n');
     }
 
-    const OUTPUT_BLOCKS=[['門診病歷 Objective','objective-output'],['復健科聯評子報告','subreport-output']];
-    const COMMON_OUTPUT_BLOCKS=[['門診病歷 Objective','objective-output'],['復健科聯評子報告','subreport-output']];
+    const OUTPUT_BLOCKS=[['objective','objective-output'],['subreport','subreport-output']];
+    function updateOutputCounts(){const objective=$('objective-output').value.length,subreport=$('subreport-output').value.length;$('objective-count').textContent=`${objective} 字`;$('subreport-count').textContent=`${subreport} / 500 字`;$('subreport-count').classList.toggle('over-limit',subreport>500)}
+    function refreshOutputControls(){updateOutputCounts();OUTPUT_BLOCKS.forEach(([key,id])=>{const text=$(id).value.trim(),fresh=!!state.outputFresh[key],regen=document.querySelector(`[data-regenerate="${key}"]`),copy=document.querySelector(`[data-copy="${id}"]`);if(regen)regen.classList.toggle('hidden',!text||(!state.outputEdited[key]&&fresh));if(copy)copy.disabled=!text||!fresh});state.outputsFresh=OUTPUT_BLOCKS.every(([key])=>state.outputFresh[key]);}
+    function updateOutputStatus(){const fresh=OUTPUT_BLOCKS.filter(([key])=>state.outputFresh[key]).length,hasText=OUTPUT_BLOCKS.some(([,id])=>$(id).value.trim());if(fresh===OUTPUT_BLOCKS.length){setStatus($('output-status'),'報告已產生','success');$('output-hint').textContent='兩份報告皆可直接編輯或複製。'}else if(fresh){setStatus($('output-status'),'1 份待更新','warn');$('output-hint').textContent='尚有一份報告需重新產生。'}else if(hasText){setStatus($('output-status'),'資料已變更','warn');$('output-hint').textContent='來源資料已變更；請重新產生報告後再複製。'}else{setStatus($('output-status'),'尚未產生');$('output-hint').textContent='依目前已完成的評估結果產生兩份可編輯文字。'}}
     function generateOutputs(){
-        if(state.manualEdits&&OUTPUT_BLOCKS.some(([,id])=>$(id).value.trim())&&!confirm('輸出文字先前曾手動修改，重新產生會覆蓋這些修改。確定要重新產生？'))return;
-        $('objective-output').value=buildObjective();$('subreport-output').value=buildSubreport();state.manualEdits=false;state.outputsFresh=true;const ready=requiredComplete();$('final-review-confirmed').checked=false;$('final-review-confirmed').disabled=false;$('review-gate').classList.remove('ready');qsa('.copy-output').forEach(b=>b.disabled=true);setStatus($('output-status'),ready?'草稿已產生，待核對':'草稿已產生（資料未完整）','warn');$('output-hint').textContent=ready?'所有必要項目已完成；請核對逐題結果後勾選確認。':'草稿已產生；所有未完成項目均會明列，請核對後再複製。';saveState();updateAll();
+        if(Object.values(state.outputEdited).some(Boolean)&&OUTPUT_BLOCKS.some(([,id])=>$(id).value.trim())&&!confirm('兩份輸出中有手動修改內容，重新產生會覆蓋修改。確定繼續？'))return;
+        $('objective-output').value=buildObjective();$('subreport-output').value=buildSubreport();state.outputEdited={objective:false,subreport:false};state.outputFresh={objective:true,subreport:true};refreshOutputControls();updateOutputStatus();saveState();updateAll();requestAnimationFrame(()=>document.querySelector('[data-output="objective"]')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'}));
     }
+    function regenerateOutput(key){const id=key==='objective'?'objective-output':'subreport-output';$(id).value=key==='objective'?buildObjective():buildSubreport();state.outputEdited[key]=false;state.outputFresh[key]=true;refreshOutputControls();updateOutputStatus();saveState();updateProgress()}
     async function copyOutput(id){
-        if(!state.outputsFresh||!$('final-review-confirmed').checked)return;let text='';
-        if(id==='all')text=COMMON_OUTPUT_BLOCKS.map(([title,tid])=>{const v=$(tid).value.trim();return v?`【${title}】\n${v}`:''}).filter(Boolean).join('\n\n');
-        else text=$(id).value.trim();
-        if(!text)return;
+        const key=OUTPUT_BLOCKS.find(([,tid])=>tid===id)?.[0];if(!key||!state.outputFresh[key])return;const text=$(id).value.trim();if(!text)return;
         try{await navigator.clipboard.writeText(text)}catch(_){const tmp=document.createElement('textarea');tmp.value=text;tmp.style.position='fixed';tmp.style.opacity='0';document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove()}
-        $('copy-live').textContent=requiredComplete()?'已複製；請於簽署前再次確認病歷系統中的個案與內容。':'已複製（含明列未完成項目）；請於簽署前再次確認。';setTimeout(()=>{$('copy-live').textContent=''},3000)}
+        const button=document.querySelector(`[data-copy="${id}"]`),original=button?.textContent;if(button){button.textContent='已複製';button.classList.add('copy-success');setTimeout(()=>{button.textContent=original;button.classList.remove('copy-success')},1800)}$('copy-live').textContent='已複製；貼入病歷或聯評系統前請再確認個案資料。';setTimeout(()=>{$('copy-live').textContent=''},3000)}
 
-    function updateProgress(){const form=currentHpaForm(),dev=getDev(),items=dev.flatMap(x=>x.items),exam=getExam(),ready=requiredComplete(),outcome=hpaOutcome(),devComplete=!!form&&careComplete()&&items.length>0&&items.every(x=>x.result!=='unassessed'),examRecorded=exam.filter(x=>x.result!=='unassessed'),examDetailPending=exam.filter(x=>x.result==='abnormal'&&!examDetailComplete(x)),sessionComplete=!!state.age&&clinicalFocusComplete(),physicalClass=!examRecorded.length?'':examDetailPending.length?' partial':examRecorded.some(x=>x.result==='abnormal')?' alert':' ready';$('dot-session').className=`nav-dot${sessionComplete?' ready':' partial'}`;$('dot-development').className=`nav-dot${devComplete?(outcome.status==='referral'||items.some(x=>x.quality)?' alert':' ready'):' partial'}`;$('dot-physical').className=`nav-dot${physicalClass}`;$('dot-overview').className=`nav-dot${ready?' ready':' partial'}`;$('dot-output').className=`nav-dot${state.outputsFresh&&$('final-review-confirmed')?.checked?' ready':''}`}
+    function updateProgress(){const form=currentHpaForm(),dev=getDev(),items=dev.flatMap(x=>x.items),exam=getExam(),ready=requiredComplete(),outcome=hpaOutcome(),devComplete=!!form&&careComplete()&&items.length>0&&items.every(x=>x.result!=='unassessed'),examRecorded=exam.filter(x=>x.result!=='unassessed'),examDetailPending=exam.filter(x=>x.result==='abnormal'&&!examDetailComplete(x)),sessionComplete=!!state.age&&clinicalFocusComplete(),physicalClass=!examRecorded.length?'':examDetailPending.length?' partial':examRecorded.some(x=>x.result==='abnormal')?' alert':' ready';$('dot-session').className=`nav-dot${sessionComplete?' ready':' partial'}`;$('dot-development').className=`nav-dot${devComplete?(outcome.status==='referral'||items.some(x=>x.quality)?' alert':' ready'):' partial'}`;$('dot-physical').className=`nav-dot${physicalClass}`;$('dot-overview').className=`nav-dot${ready?' ready':' partial'}`;$('dot-output').className=`nav-dot${state.outputsFresh?' ready':''}`}
 
     function openSpecialty(type){qsa('.main-workflow').forEach(x=>x.classList.add('hidden'));$(`${type}-page`).classList.remove('hidden');window.scrollTo(0,0);$(`${type}-page-title`).focus?.()}
     function closeSpecialty(){qsa('.specialty-page').forEach(x=>x.classList.add('hidden'));qsa('.main-workflow').forEach(x=>x.classList.remove('hidden'));window.scrollTo(0,document.body.dataset.returnScroll?Number(document.body.dataset.returnScroll):0)}
@@ -1105,23 +1125,22 @@
         $('assessment-date').value=today();['birth-date','assessment-date','gestational-weeks','gestational-days'].forEach(id=>$(id).addEventListener('change',updateAge));$('use-corrected-age').addEventListener('change',()=>{state.correctionTouched=true;updateAge()});$('informant').addEventListener('change',markStale);
         ['referral-source','clinical-course','chief-concern'].forEach(id=>$(id).addEventListener(id==='chief-concern'?'input':'change',()=>{markStale();updateAll()}));
         qsa('[data-clinical-concern],[data-clinical-none],input[name^="redflag-"]').forEach(el=>el.addEventListener('change',()=>{if(el.dataset.clinicalNone!==undefined&&el.checked)qsa('[data-clinical-concern]').forEach(x=>x.checked=false);if(el.dataset.clinicalConcern!==undefined&&el.checked)$('concern-none').checked=false;markStale();updateAll()}));
-        $('final-review-confirmed').addEventListener('change',()=>{const ok=$('final-review-confirmed').checked&&state.outputsFresh;qsa('.copy-output').forEach(b=>b.disabled=!ok);$('review-gate').classList.toggle('ready',ok);setStatus($('output-status'),ok?'已核對，可複製':state.outputsFresh?'草稿已產生，待核對':'尚未產生',ok?'success':'warn');$('output-hint').textContent=ok?'已完成核對；可複製所需文字，簽署前仍請在病歷系統確認個案。':'完成核對勾選後才開放複製。';saveState();updateProgress()});
         $('export-case').addEventListener('click',exportCase);$('import-case').addEventListener('click',()=>$('import-case-file').click());$('import-case-file').addEventListener('change',e=>importCaseFile(e.target.files?.[0]));
         document.addEventListener('click',e=>{const jump=e.target.closest('[data-jump]');if(!jump)return;const link=document.querySelector(`.nav-list a[href="#${jump.dataset.jump}"]`);if(link)link.click()});
         qsa('input[name="care-feeding"],input[name="care-delay"],input[name="care-attention"],[data-care-delay]').forEach(el=>el.addEventListener('change',()=>{const care=getCare();$('care-feeding-note').classList.toggle('hidden',care.feeding!=='yes');$('care-delay-detail').classList.toggle('hidden',care.delay!=='yes');$('care-attention-note').classList.toggle('hidden',care.attention!=='yes');if(care.delay!=='yes')qsa('[data-care-delay]').forEach(x=>x.checked=false);markStale();syncExamTriggers();updateAll()}));
         document.addEventListener('click',e=>{const add=e.target.closest('[data-add]'),remove=e.target.closest('[data-remove]');if(add)addStructuredRow(add.dataset.add);if(remove){state.rows[remove.dataset.remove].splice(Number(remove.dataset.i),1);renderStructuredRows(remove.dataset.remove);markStale();updateAll()}});document.addEventListener('input',e=>{if(e.target.dataset.row){state.rows[e.target.dataset.row][Number(e.target.dataset.i)][e.target.dataset.key]=e.target.value;markStale();updateAll()}});
         ['asd','adhd'].forEach(type=>{const check=$(`${type}-concern`),button=$(`open-${type}`),card=$(`${type}-concern-card`);check.addEventListener('change',()=>{button.disabled=!check.checked;card.classList.toggle('active',check.checked);markStale();updateSpecialtyResults();updateAll()});button.addEventListener('click',()=>{document.body.dataset.returnScroll=String(window.scrollY);openSpecialty(type)})});qsa('.back-main').forEach(b=>b.addEventListener('click',closeSpecialty));
         $('mchat-status').addEventListener('change',updateMchatControls);['mchat-score','mchat-followup'].forEach(id=>$(id).addEventListener('input',updateMchatControls));['parent-status','teacher-status'].forEach(id=>$(id).addEventListener('change',()=>{updateRater(id.split('-')[0]);updateSpecialtyResults();markStale()}));['parent-inattention','parent-hyper','teacher-inattention','teacher-hyper'].forEach(id=>$(id).addEventListener('input',()=>{updateSpecialtyResults();markStale()}));
-        $('generate-outputs').addEventListener('click',generateOutputs);qsa('.copy-output').forEach(b=>b.addEventListener('click',()=>copyOutput(b.dataset.copy)));$('close-figure').addEventListener('click',()=>$('figure-dialog').close());$('new-case').addEventListener('click',()=>{if(confirm('開始新個案會清除目前分頁所有資料，確定繼續？')){try{sessionStorage.removeItem(SAVE_KEY)}catch(_){}location.reload()}});
+        $('generate-outputs').addEventListener('click',generateOutputs);qsa('.copy-output').forEach(b=>b.addEventListener('click',()=>copyOutput(b.dataset.copy)));qsa('.output-regenerate').forEach(b=>b.addEventListener('click',()=>regenerateOutput(b.dataset.regenerate)));$('close-figure').addEventListener('click',()=>$('figure-dialog').close());$('new-case').addEventListener('click',()=>{if(confirm('開始新個案會清除目前分頁所有資料，確定繼續？')){try{sessionStorage.removeItem(SAVE_KEY)}catch(_){}location.reload()}});
         $('case-label').addEventListener('input',markStale);
-        OUTPUT_BLOCKS.forEach(([,id])=>$(id).addEventListener('input',()=>{state.manualEdits=true;saveState()}));
+        OUTPUT_BLOCKS.forEach(([key,id])=>$(id).addEventListener('input',()=>{state.outputEdited[key]=true;refreshOutputControls();saveState()}));
         const fillMirrors=()=>qsa('.output-block').forEach(b=>{const t=b.querySelector('textarea'),m=b.querySelector('.print-mirror');if(t&&m)m.textContent=t.value});
         window.addEventListener('beforeprint',fillMirrors);
         window.addEventListener('afterprint',()=>{delete document.body.dataset.print});
         window.addEventListener('beforeunload',e=>{const hasData=!!value('birth-date')||Object.values(state.hpaResponses).some(r=>r&&r.result&&r.result!=='unassessed');if(!hasData||state.outputsFresh)return;e.preventDefault();e.returnValue=''});
     }
 
-    renderDevelopment();renderExam();renderRecommendations();renderCriteria('asd-criteria-list',ASD_CRITERIA,'asdcrit');renderCriteria('adhd-criteria-list',ADHD_CRITERIA,'adhdcrit');bind();updateAge();updateRater('parent');updateRater('teacher');updateSpecialtyResults();updateAll();
+    renderDevelopment();renderExam();renderRecommendations();renderCriteria('asd-criteria-list',ASD_CRITERIA,'asdcrit');renderCriteria('adhd-criteria-list',ADHD_CRITERIA,'adhdcrit');bind();updateAge();updateRater('parent');updateRater('teacher');updateSpecialtyResults();updateAll();refreshOutputControls();updateOutputStatus();
     if(restoreState())$('restore-note').classList.remove('hidden');
     </script>
 
