@@ -373,6 +373,27 @@
         .criteria-row{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
         .criteria-row:last-child{border-bottom:0}
         .criteria-row label{font-weight:550;font-size:13.5px}
+        .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+        .adhd-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+        .adhd-summary-card{padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fbfcfd}
+        .adhd-summary-card strong{display:block;margin-bottom:4px;color:var(--ink);font-size:13.5px}
+        .adhd-summary-card span{display:block;color:var(--muted);font-size:12.5px;line-height:1.6}
+        .adhd-domain{margin-top:16px;border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface)}
+        .adhd-domain:first-of-type{margin-top:0}
+        .adhd-domain-head{padding:12px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#f3f6f9;border-bottom:1px solid var(--line)}
+        .adhd-domain-head h3{margin:0;color:var(--ink);font-size:14px}
+        .adhd-domain-head p{margin:2px 0 0;color:var(--muted);font-size:12px}
+        .adhd-domain-counts{flex:0 0 auto;color:var(--muted);font-size:12px;line-height:1.55;text-align:right}
+        .adhd-table-head,.adhd-symptom-row{display:grid;grid-template-columns:minmax(0,1fr) 210px 210px;gap:12px;align-items:center}
+        .adhd-table-head{padding:8px 14px;background:#fbfcfd;border-bottom:1px solid var(--line);color:var(--faint);font-size:11.5px;font-weight:650;letter-spacing:.02em}
+        .adhd-table-head span:not(:first-child){text-align:center}
+        .adhd-symptom-row{padding:11px 14px;border-bottom:1px solid var(--line)}
+        .adhd-symptom-row:last-child{border-bottom:0}
+        .adhd-symptom-copy{display:grid;grid-template-columns:38px minmax(0,1fr);gap:9px;align-items:start;color:var(--ink-soft);font-size:13.5px;line-height:1.55}
+        .adhd-code{display:inline-flex;align-items:center;justify-content:center;min-height:25px;padding:2px 6px;border:1px solid #d3e2ef;border-radius:6px;background:var(--accent-soft);color:var(--accent-deep);font-size:11.5px;font-weight:700}
+        .adhd-rating{min-width:0;margin:0;padding:0;border:0}
+        .adhd-rating legend{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+        .adhd-rating .segmented span{min-height:34px;padding:4px 5px;font-size:12px}
         .education-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
         .education-card{padding:15px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
         .education-card h3{color:var(--ink)}
@@ -383,8 +404,8 @@
 
         /* ── Responsive ─────────────────────────── */
         @media(max-width:1120px){.app-shell{grid-template-columns:200px minmax(0,1fr);gap:20px}.review-main{grid-template-columns:minmax(180px,1fr) 350px}.tool-cards{grid-template-columns:1fr}.classification-list{grid-template-columns:repeat(3,minmax(0,1fr))}.care-grid{grid-template-columns:1fr}.care-card h4{min-height:auto}.concern-picker{grid-template-columns:repeat(3,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr 300px}.icf-grid{grid-template-columns:1fr}}
-        @media(max-width:840px){.topbar-inner,.app-shell{width:min(100% - 28px,760px)}.topbar-inner{align-items:flex-start;flex-direction:column;gap:8px}.privacy{text-align:left;white-space:normal}.app-shell{grid-template-columns:minmax(0,1fr);padding-top:16px}.workflow,.workflow>*,section.card{min-width:0;max-width:100%}.side-rail{position:static}.rail-title,.rail-note{display:none}.nav-list{grid-template-columns:repeat(3,minmax(0,1fr))}.nav-list a{grid-template-columns:auto minmax(0,1fr) 8px;min-height:38px;padding:5px 8px;font-size:12.5px}.review-main{grid-template-columns:1fr}.grid.four,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.hpa-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr))}.hpa-item-head{grid-template-columns:1fr}.domain-head{position:static;align-items:flex-start}.step-bar .button{min-width:0;flex:1}.result-domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.output-grid{grid-template-columns:1fr}}
-        @media(max-width:560px){body{font-size:14px}.topbar-inner{padding:12px 0}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr))}.card-head{padding:14px;flex-direction:column}.card-body{padding:14px}.head-actions{width:100%}.grid.two,.grid.three,.grid.four,.probe-grid,.concern-grid,.overview-grid,.recommend-grid,.education-grid,.standard-grid,.guidance-grid,.result-domain-grid{grid-template-columns:1fr}.classification-list{grid-template-columns:1fr}.classification-option span{min-height:0}.concern-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr;gap:7px}.review-summary{grid-template-columns:1fr}.clinical-alert{position:static;grid-template-columns:4px minmax(0,1fr)}.clinical-alert .button{grid-column:2}.segmented.cols4 span{padding-inline:4px;font-size:12.5px}.output-toolbar{align-items:stretch}.output-toolbar .button{width:100%}.output-head{min-height:0;flex-direction:column}.output-actions{width:100%;justify-content:flex-start}.output-block textarea{min-height:300px}}
+        @media(max-width:840px){.topbar-inner,.app-shell{width:min(100% - 28px,760px)}.topbar-inner{align-items:flex-start;flex-direction:column;gap:8px}.privacy{text-align:left;white-space:normal}.app-shell{grid-template-columns:minmax(0,1fr);padding-top:16px}.workflow,.workflow>*,section.card{min-width:0;max-width:100%}.side-rail{position:static}.rail-title,.rail-note{display:none}.nav-list{grid-template-columns:repeat(3,minmax(0,1fr))}.nav-list a{grid-template-columns:auto minmax(0,1fr) 8px;min-height:38px;padding:5px 8px;font-size:12.5px}.review-main{grid-template-columns:1fr}.grid.four,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.hpa-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr))}.hpa-item-head{grid-template-columns:1fr}.domain-head{position:static;align-items:flex-start}.step-bar .button{min-width:0;flex:1}.result-domain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.output-grid{grid-template-columns:1fr}.adhd-table-head,.adhd-symptom-row{grid-template-columns:minmax(0,1fr) 180px 180px}}
+        @media(max-width:560px){body{font-size:14px}.topbar-inner{padding:12px 0}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr))}.card-head{padding:14px;flex-direction:column}.card-body{padding:14px}.head-actions{width:100%}.grid.two,.grid.three,.grid.four,.probe-grid,.concern-grid,.overview-grid,.recommend-grid,.education-grid,.standard-grid,.guidance-grid,.result-domain-grid,.adhd-summary-grid{grid-template-columns:1fr}.classification-list{grid-template-columns:1fr}.classification-option span{min-height:0}.concern-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.redflag-row{grid-template-columns:1fr;gap:7px}.review-summary{grid-template-columns:1fr}.clinical-alert{position:static;grid-template-columns:4px minmax(0,1fr)}.clinical-alert .button{grid-column:2}.segmented.cols4 span{padding-inline:4px;font-size:12.5px}.output-toolbar{align-items:stretch}.output-toolbar .button{width:100%}.output-head{min-height:0;flex-direction:column}.output-actions{width:100%;justify-content:flex-start}.output-block textarea{min-height:300px}.specialty-shell{width:min(100% - 24px,540px)}.adhd-domain-head{display:block}.adhd-domain-counts{margin-top:5px;text-align:left}.adhd-table-head{display:none}.adhd-symptom-row{grid-template-columns:1fr;gap:9px;padding:13px}.adhd-rating legend{position:static;width:auto;height:auto;margin:0 0 4px;overflow:visible;clip:auto;white-space:normal;color:var(--muted);font-size:12px;font-weight:650}.adhd-symptom-copy{grid-template-columns:36px minmax(0,1fr)}}
         .skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:8px 12px;border-radius:6px;background:var(--accent-deep);color:#fff;transform:translateY(-150%);text-decoration:none}
         .skip-link:focus{transform:translateY(0)}
         @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
@@ -447,7 +468,8 @@
                         <div class="field"><label for="gestational-days">加計天數</label><input id="gestational-days" type="number" min="0" max="6" step="1" placeholder="0–6 天"></div>
                     </div>
                     <label class="inline-check"><input id="use-corrected-age" type="checkbox" disabled><span>早產（出生未滿 37 週）且實足年齡未滿 24 個月：以估算矯正月齡選表與解讀（矯正使用至實足 2 歲即止；規則請與國健署現行指引核對）</span></label>
-                    <div class="grid two" style="max-width:760px"><div class="field"><label for="informant">評估資料</label><select id="informant"><option>臨床觀察與照顧者報告</option><option>臨床直接觀察</option><option>照顧者報告</option><option>臨床觀察、照顧者與教師報告</option></select></div><div class="field"><label for="case-label">個案代號／病歷號（選填）</label><input id="case-label" type="text" maxlength="30" placeholder="僅顯示於輸出文字，避免多人混貼"><span class="help">只暫存於此分頁，不上傳。</span></div></div>
+                    <div class="grid two" style="max-width:760px"><div class="field"><label for="informant">評估資料</label><select id="informant"><option>臨床觀察與照顧者報告</option><option>臨床直接觀察</option><option>照顧者報告</option><option>臨床觀察、照顧者與教師報告</option></select></div><div class="field"><label for="case-label">個案代號／病歷號（選填）</label><input id="case-label" type="text" maxlength="30" placeholder="僅供工作辨識，不寫入舊版格式報告"><span class="help">只暫存於此分頁，不上傳。</span></div></div>
+                    <div class="grid two" style="max-width:760px;margin-top:13px"><div class="field"><label class="required" for="entry-method">進入診間方式</label><select id="entry-method"><option value="">尚未記錄</option><option>自行走入診間</option><option>由父母抱入診間</option><option>坐推車進入診間</option><option>由輪椅進入診間</option><option>由他人攙扶進入診間</option></select></div><div class="field"><label class="required" for="emotion-state">情緒與專注力</label><select id="emotion-state"><option value="">尚未記錄</option><option>情緒及專注力可</option><option>易分心</option><option>情緒及專注力佳</option><option>哭鬧難安撫</option><option>活動量高且較難維持專注</option><option>配合度受限，難以判定</option></select></div></div>
                     <div class="error" id="age-error" role="alert"></div>
                     <div class="age-box hidden" id="age-box" aria-live="polite"><div><strong id="age-primary">—</strong><p id="age-secondary">—</p></div><div class="age-mode" id="age-mode">—</div></div>
 
@@ -624,12 +646,12 @@
                     <div class="output-toolbar"><p id="output-hint">依目前已完成的評估結果產生兩份可編輯文字。</p><button class="button primary" id="generate-outputs" type="button">產生／更新兩份報告</button></div>
                     <div class="output-grid">
                         <article class="output-block" data-output="objective">
-                            <div class="output-head"><div><h3>1. 病歷 Objective 內容</h3><span class="help">English medical record format · unassessed items omitted</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="objective">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="objective-output" disabled>複製</button></div></div>
+                            <div class="output-head"><div><h3>1. 病歷 Objective 內容</h3><span class="help">舊版 O:／Entry／Mood-Attention／四領域格式 · 未評項目省略</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="objective">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="objective-output" disabled>複製</button></div></div>
                             <textarea id="objective-output" name="objective-output" aria-label="病歷 Objective 內容" autocomplete="off" spellcheck="false"></textarea><div class="print-mirror"></div>
                             <div class="output-footer"><span>可直接修改後複製至病歷</span><span class="character-count" id="objective-count">0 字</span></div>
                         </article>
                         <article class="output-block" data-output="subreport">
-                            <div class="output-head"><div><h3>2. 聯合評估統合報告（敘述型）</h3><span class="help">中文客觀描述 · 不加入主觀判斷</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="subreport">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="subreport-output" disabled>複製</button></div></div>
+                            <div class="output-head"><div><h3>2. 聯合評估統合報告（敘述型）</h3><span class="help">舊版中文「目前可／目前尚未」客觀敘述格式</span></div><div class="output-actions"><button class="button secondary output-regenerate hidden" type="button" data-regenerate="subreport">已修改，重新產生</button><button class="button secondary copy-output" type="button" data-copy="subreport-output" disabled>複製</button></div></div>
                             <textarea id="subreport-output" name="subreport-output" aria-label="聯合評估統合報告" autocomplete="off" spellcheck="false"></textarea><div class="print-mirror"></div>
                             <div class="output-footer"><span>建議 500 字內，超過仍可使用</span><span class="character-count" id="subreport-count">0 / 500 字</span></div>
                         </article>
@@ -664,8 +686,8 @@
         <div class="specialty-shell">
             <div class="specialty-top"><h1 id="adhd-page-title" tabindex="-1">ADHD 疑慮評估專頁</h1><button class="button secondary back-main" type="button">返回復健科主評估</button></div>
             <div class="card"><div class="card-head"><div><h2>年齡與跨情境資料</h2><p>學齡前需審慎確認發展適切性；家長與教師／托育資料缺一即不分類。</p></div><span class="status" id="adhd-age-status">等待年齡</span></div><div class="card-body"><div class="callout" id="adhd-age-guidance"></div></div></div>
-            <div class="card"><div class="card-head"><div><h2>親師量表／DSM 症狀數（選填）</h2><p>若已有 SNAP-IV 或其他適齡量表可分開記錄親師症狀數；正式診斷仍須跨情境資料，本欄未填時不產生 ADHD 診斷文字。</p></div></div><div class="card-body"><div class="grid two"><div class="tool-card"><h4>家長</h4><div class="grid two"><div class="field"><label for="parent-status">狀態</label><select id="parent-status"><option value="untested">未取得／不記錄</option><option value="completed">已完成</option></select></div><div class="field"><label for="parent-inattention">注意力不足症狀數（0–9）</label><input id="parent-inattention" type="number" min="0" max="9" disabled></div><div class="field"><label for="parent-hyper">過動／衝動症狀數（0–9）</label><input id="parent-hyper" type="number" min="0" max="9" disabled></div></div></div><div class="tool-card"><h4>教師／托育</h4><div class="grid two"><div class="field"><label for="teacher-status">狀態</label><select id="teacher-status"><option value="untested">未取得／不記錄</option><option value="completed">已完成</option></select></div><div class="field"><label for="teacher-inattention">注意力不足症狀數（0–9）</label><input id="teacher-inattention" type="number" min="0" max="9" disabled></div><div class="field"><label for="teacher-hyper">過動／衝動症狀數（0–9）</label><input id="teacher-hyper" type="number" min="0" max="9" disabled></div></div></div></div></div></div>
-            <div class="card"><div class="card-head"><div><h2>診斷條件完整度</h2><p>必須同時確認病程、跨情境、功能損害與鑑別。</p></div></div><div class="card-body"><div class="criteria-list" id="adhd-criteria-list"></div><div class="callout" id="adhd-result" style="margin-top:12px"></div></div></div>
+            <div class="card"><div class="card-head"><div><h2>ADHD 核心症狀逐項核對</h2><p>18 項症狀分別記錄家長與教師／托育觀察；「未確認」不會被當成「否」，症狀數由系統即時計算，不可手動輸入。</p></div></div><div class="card-body"><div class="adhd-summary-grid" aria-live="polite"><div class="adhd-summary-card"><strong>家長觀察</strong><span id="adhd-parent-summary">尚未逐項記錄</span></div><div class="adhd-summary-card"><strong>教師／托育觀察</strong><span id="adhd-teacher-summary">尚未逐項記錄</span></div><div class="adhd-summary-card"><strong>年齡症狀數參考</strong><span id="adhd-threshold-summary">等待年齡</span></div><div class="adhd-summary-card"><strong>跨情境客觀差異</strong><span id="adhd-cross-summary">尚無足夠資料比較</span></div></div><div class="callout">此處只整理逐項觀察、症狀數與來源差異；不會由單一頁面自動產生 ADHD 診斷。</div><div id="adhd-symptom-list" style="margin-top:16px"></div></div></div>
+            <div class="card"><div class="card-head"><div><h2>其他評估條件完整度</h2><p>症狀數之外，仍需逐項確認病程、跨情境、功能損害、發展適切性與其他可能原因。</p></div></div><div class="card-body"><div class="criteria-list" id="adhd-criteria-list"></div><div class="callout" id="adhd-result" style="margin-top:12px"></div></div></div>
             <div class="education-grid"><div class="education-card"><h3>治療方向</h3><ul><li>學齡前以家長訓練、環境與行為介入為核心。</li><li>學齡期整合家庭、學校支持及必要醫療治療。</li><li>藥物評估須另行核對身高體重、生命徵象、心血管史、睡眠、食慾與共病。</li></ul></div><div class="education-card"><h3>家長與學校衛教</h3><ul><li>固定作息，指令短而具體，一次處理一件事。</li><li>給予立即且明確的正向回饋，降低環境干擾。</li><li>家庭與學校共同設定可觀察的功能目標並持續回饋。</li></ul></div></div>
         </div>
     </section>
@@ -722,6 +744,30 @@
         {id:'early',label:'特徵存在於早期發展期',group:'C'},
         {id:'impairment',label:'造成臨床上明顯功能損害',group:'D'},
         {id:'differential',label:'已考量認知、語言、聽力及其他鑑別',group:'E'}
+    ];
+    const ADHD_SYMPTOM_GROUPS=[
+        {id:'inattention',label:'注意力不足',items:[
+            {id:'ia1',label:'容易忽略細節，或在作業及其他活動中粗心出錯'},
+            {id:'ia2',label:'難以持續專注於任務或遊戲活動'},
+            {id:'ia3',label:'直接對話時，看起來似乎沒有在聽'},
+            {id:'ia4',label:'難以遵循指示，常無法完成作業、家事或其他任務'},
+            {id:'ia5',label:'組織任務與活動有困難'},
+            {id:'ia6',label:'逃避、不喜歡或不願進行需要持續心力的任務'},
+            {id:'ia7',label:'經常遺失完成任務或活動所需的物品'},
+            {id:'ia8',label:'容易受到外在刺激而分心'},
+            {id:'ia9',label:'日常活動中經常健忘'}
+        ]},
+        {id:'hyperactive',label:'過動／衝動',items:[
+            {id:'hi1',label:'經常手腳動不停、敲動，或在座位上扭動'},
+            {id:'hi2',label:'在應該維持坐姿的情境中離開座位'},
+            {id:'hi3',label:'在不適當的情境跑動或攀爬；青少年可能表現為坐立不安'},
+            {id:'hi4',label:'難以安靜地遊戲或從事休閒活動'},
+            {id:'hi5',label:'經常不停活動，像被馬達驅動'},
+            {id:'hi6',label:'經常說話過多'},
+            {id:'hi7',label:'問題尚未說完便搶著回答'},
+            {id:'hi8',label:'難以等待輪流'},
+            {id:'hi9',label:'經常打斷或侵入他人的談話、遊戲或活動'}
+        ]}
     ];
     const ADHD_CRITERIA=[
         {id:'duration',label:'症狀持續至少 6 個月'},
@@ -782,7 +828,7 @@
             getExam().forEach(item=>{const d=$(`exam-detail-${item.id}`);if(d)d.classList.toggle('hidden',item.result!=='abnormal')});
             const care=getCare();$('care-feeding-note').classList.toggle('hidden',care.feeding!=='yes');$('care-delay-detail').classList.toggle('hidden',care.delay!=='yes');$('care-attention-note').classList.toggle('hidden',care.attention!=='yes');
             ['asd','adhd'].forEach(type=>{const on=$(`${type}-concern`).checked;$(`open-${type}`).disabled=!on;$(`${type}-concern-card`).classList.toggle('active',on)});
-            updateMchatControls();updateRater('parent');updateRater('teacher');renderCPModule();updateSpecialtyResults();syncExamTriggers();updateAll();refreshOutputControls();updateOutputStatus();
+            updateMchatControls();renderCPModule();updateSpecialtyResults();syncExamTriggers();updateAll();refreshOutputControls();updateOutputStatus();
         }finally{state.restoring=false}
         return true;
     }
@@ -824,9 +870,9 @@
     function clinicalFocus(){
         const concerns=qsa('[data-clinical-concern]:checked').map(x=>x.value),none=$('concern-none').checked;
         const redflags=[],team=[];
-        return{source:value('referral-source'),course:value('clinical-course'),chief:(value('chief-concern')||'').trim(),concerns:none?['例行追蹤／無特定關注']:concerns,none,redflags,redPositive:[],redPending:[],activity:'',participation:'',environment:'',team};
+        return{source:value('referral-source'),course:value('clinical-course'),chief:(value('chief-concern')||'').trim(),entry:value('entry-method'),mood:value('emotion-state'),concerns:none?['例行追蹤／無特定關注']:concerns,none,redflags,redPositive:[],redPending:[],activity:'',participation:'',environment:'',team};
     }
-    function clinicalFocusComplete(){const c=clinicalFocus();return!!c.source&&c.concerns.length>0}
+    function clinicalFocusComplete(){const c=clinicalFocus();return!!c.source&&!!c.entry&&!!c.mood&&c.concerns.length>0}
     function teamTextChinese(){return clinicalFocus().team.filter(x=>x.status||x.note).map(x=>`${x.label}：${x.status||'狀態未確認'}${x.note?`（${x.note}）`:''}`).join('；')}
     function teamTextEnglish(){return clinicalFocus().team.filter(x=>x.status||x.note).map(x=>`${x.label}: ${x.status||'status not confirmed'}${x.note?` (${x.note})`:''}`).join('; ')}
     function getDev(){const form=currentHpaForm();if(!form)return[];return form.domains.map(domain=>{const items=domain.items.map(item=>({...item,...itemResponse(item),domainId:domain.id,domainLabel:domain.label})),complete=items.every(x=>x.result!=='unassessed'),score=items.reduce((n,x)=>n+(x.result==='pass'?x.weight:0),0),result=!complete?'unassessed':score>=domain.cutoff?'appropriate':'concern';return{...domain,items,complete,score,result,failedItems:items.filter(x=>x.result==='fail'),qualityItems:items.filter(x=>x.quality),suggestion:DOMAIN_EDUCATION[domain.id]||''}})}
@@ -919,12 +965,25 @@
 
     function renderCriteria(containerId,data,prefix){const box=$(containerId);box.innerHTML='';data.forEach(item=>{const row=document.createElement('div');row.className='criteria-row';row.innerHTML=`<label for="${prefix}-${item.id}">${item.label}</label><select id="${prefix}-${item.id}" data-criteria><option value="unknown">未確認</option><option value="no">否</option><option value="yes">是</option></select>`;box.appendChild(row)});box.addEventListener('change',()=>{markStale();updateSpecialtyResults();updateAll()})}
 
+    const ADHD_RATERS=[['parent','家長'],['teacher','教師／托育']];
+    const adhdItems=()=>ADHD_SYMPTOM_GROUPS.flatMap(group=>group.items.map(item=>({...item,groupId:group.id,groupLabel:group.label})));
+    function adhdRatingControl(rater,raterLabel,item){const name=`adhd-${rater}-${item.id}`;return`<fieldset class="adhd-rating"><legend>${raterLabel}對 ${item.id.toUpperCase()} 的觀察</legend><div class="segmented"><label><input type="radio" name="${name}" value="unknown" data-adhd-rating checked><span>未確認</span></label><label><input type="radio" name="${name}" value="no" data-adhd-rating><span>否</span></label><label><input type="radio" name="${name}" value="yes" data-adhd-rating><span>是</span></label></div></fieldset>`}
+    function renderAdhdSymptoms(){const box=$('adhd-symptom-list');box.innerHTML=ADHD_SYMPTOM_GROUPS.map(group=>`<section class="adhd-domain" aria-labelledby="adhd-${group.id}-title"><div class="adhd-domain-head"><div><h3 id="adhd-${group.id}-title">${group.label}（9 項）</h3><p>每一項都需分別核對兩個資料來源。</p></div><div class="adhd-domain-counts" id="adhd-${group.id}-counts">家長 0/9｜教師 0/9</div></div><div class="adhd-table-head" aria-hidden="true"><span>症狀項目</span><span>家長</span><span>教師／托育</span></div>${group.items.map(item=>`<div class="adhd-symptom-row"><div class="adhd-symptom-copy"><span class="adhd-code">${item.id.toUpperCase()}</span><span>${escapeHTML(item.label)}</span></div>${ADHD_RATERS.map(([rater,label])=>adhdRatingControl(rater,label,item)).join('')}</div>`).join('')}</section>`).join('')}
+    const adhdRating=(rater,itemId)=>document.querySelector(`input[name="adhd-${rater}-${itemId}"]:checked`)?.value||'unknown';
+    function adhdRaterStats(rater){const groups={};ADHD_SYMPTOM_GROUPS.forEach(group=>{const ratings=group.items.map(item=>adhdRating(rater,item.id));groups[group.id]={yes:ratings.filter(x=>x==='yes').length,no:ratings.filter(x=>x==='no').length,unknown:ratings.filter(x=>x==='unknown').length}});const all=Object.values(groups);return{groups,yes:all.reduce((n,x)=>n+x.yes,0),no:all.reduce((n,x)=>n+x.no,0),unknown:all.reduce((n,x)=>n+x.unknown,0)}}
+    function adhdSymptomData(){const parent=adhdRaterStats('parent'),teacher=adhdRaterStats('teacher'),items=adhdItems(),bothYes=items.filter(x=>adhdRating('parent',x.id)==='yes'&&adhdRating('teacher',x.id)==='yes'),parentOnly=items.filter(x=>adhdRating('parent',x.id)==='yes'&&adhdRating('teacher',x.id)==='no'),teacherOnly=items.filter(x=>adhdRating('teacher',x.id)==='yes'&&adhdRating('parent',x.id)==='no'),incompletePairs=items.filter(x=>adhdRating('parent',x.id)==='unknown'||adhdRating('teacher',x.id)==='unknown');return{parent,teacher,bothYes,parentOnly,teacherOnly,incompletePairs,anyRecorded:parent.yes+parent.no+teacher.yes+teacher.no>0,complete:parent.unknown===0&&teacher.unknown===0}}
+    function adhdThresholdLabel(stats,threshold){if(stats.yes>=threshold)return'達症狀數參考值';if(stats.unknown===0)return'未達症狀數參考值';return`尚有 ${stats.unknown} 項未確認`}
+    function updateAdhdSummary(){const data=adhdSymptomData(),age=state.age?.chronological?.months,threshold=age!=null&&age>=204?5:6,summary=(stats)=>`注意力不足 ${stats.groups.inattention.yes}/9（${adhdThresholdLabel(stats.groups.inattention,threshold)}）；過動／衝動 ${stats.groups.hyperactive.yes}/9（${adhdThresholdLabel(stats.groups.hyperactive,threshold)}）；未確認 ${stats.unknown}/18`;$('adhd-parent-summary').textContent=summary(data.parent);$('adhd-teacher-summary').textContent=summary(data.teacher);$('adhd-threshold-summary').textContent=age==null?'等待年齡':age<48?'未滿 4 歲，本頁不做 ADHD 症狀數解讀':age>=216?'已滿 18 歲，請改用成人評估流程':`${age>=204?'17 歲以上':'4–16 歲'}：每一向度 ${threshold}/9 項為症狀數參考值；仍須整合病程、功能與跨情境資料`;$('adhd-cross-summary').textContent=!data.anyRecorded?'尚無足夠資料比較':`雙方皆記錄為「是」${data.bothYes.length} 項；僅家長 ${data.parentOnly.length} 項；僅教師／托育 ${data.teacherOnly.length} 項；${data.incompletePairs.length} 項尚未完成雙方核對`;ADHD_SYMPTOM_GROUPS.forEach(group=>{$(`adhd-${group.id}-counts`).textContent=`家長 ${data.parent.groups[group.id].yes}/9｜教師 ${data.teacher.groups[group.id].yes}/9`})}
     function mchatResult(){if(!$('asd-concern').checked)return{positive:false,complete:true,label:'未啟用'};const age=state.age?.chronological?.months;if(age==null||age<16||age>30)return{positive:false,complete:true,label:'M-CHAT 不適齡'};if(value('mchat-status')!=='completed')return{positive:false,complete:true,label:'M-CHAT 未記錄（選填）'};const score=Number(value('mchat-score'));if(!Number.isInteger(score)||score<0||score>20)return{positive:false,complete:false,label:'初篩分數不完整'};if(score<=2)return{positive:false,complete:true,label:'M-CHAT 初篩低可能性'};if(score>=8)return{positive:true,complete:true,label:`M-CHAT-R ${score}/20，高可能性`};const f=Number(value('mchat-followup'));if(!Number.isInteger(f)||f<0||f>7)return{positive:false,complete:false,label:'需要完成 Follow-Up'};return{positive:f>=2,complete:true,label:f>=2?`M-CHAT-R/F 陽性（Follow-Up ${f}）`:`M-CHAT-R/F 陰性（Follow-Up ${f}）`}}
     function asdClinicalResult(){if(!$('asd-concern').checked)return{positive:false,complete:true};const vals=Object.fromEntries(ASD_CRITERIA.map(x=>[x.id,value(`asdcrit-${x.id}`)])),complete=Object.values(vals).every(v=>v!=='unknown'),a=ASD_CRITERIA.filter(x=>x.group==='A'&&vals[x.id]==='yes').length,b=ASD_CRITERIA.filter(x=>x.group==='B'&&vals[x.id]==='yes').length,positive=complete&&a===3&&b>=2&&vals.early==='yes'&&vals.impairment==='yes'&&vals.differential==='yes';return{positive,complete,a,b}}
     function adhdResult(){
         if(!$('adhd-concern').checked)return{positive:false,complete:true,label:'未啟用'};
         const age=state.age?.chronological?.months;if(age==null||age<48||age>=216)return{positive:false,complete:true,label:age!=null&&age>=216?'已滿 18 歲，請改用成人 ADHD 評估流程':'未滿 4 歲，本頁不產生 ADHD 結論'};
-        const criteria=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),criteriaComplete=criteria.every(v=>v!=='unknown'),criteriaMet=criteriaComplete&&criteria.every(v=>v==='yes');if(!criteriaComplete)return{positive:false,complete:false,label:'診斷條件尚未逐項確認'};const ratings=value('parent-status')==='completed'&&value('teacher-status')==='completed';if(!ratings)return{positive:false,complete:true,label:'臨床條件已檢核；未輸入完整親師量表，不產生 ADHD 診斷文字'};const ids=['parent-inattention','parent-hyper','teacher-inattention','teacher-hyper'],nums=ids.map(id=>Number(value(id)));if(nums.some(n=>!Number.isInteger(n)||n<0||n>9))return{positive:false,complete:false,label:'症狀數未完整'};const thresholdCount=age>=204?5:6,threshold=nums.some(n=>n>=thresholdCount),positive=threshold&&criteriaMet;return{positive,complete:true,threshold,thresholdCount,nums,label:positive?'ADHD 診斷條件型態達關注門檻（任一資料來源之單一向度症狀數達標；正式診斷仍應整合跨情境症狀重疊情形）':threshold?'症狀數達門檻（單一資料來源之單一向度），但完整診斷條件未符合':'親師症狀數未達門檻'}
+        const symptoms=adhdSymptomData(),criteria=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),criteriaComplete=criteria.every(v=>v!=='unknown'),thresholdCount=age>=204?5:6,threshold=['inattention','hyperactive'].some(group=>symptoms.parent.groups[group].yes>=thresholdCount||symptoms.teacher.groups[group].yes>=thresholdCount);
+        if(!symptoms.anyRecorded)return{positive:false,complete:false,threshold,thresholdCount,label:'ADHD 核心症狀尚未逐項記錄'};
+        if(!symptoms.complete)return{positive:false,complete:false,threshold,thresholdCount,label:`核心症狀尚未完成：家長未確認 ${symptoms.parent.unknown} 項，教師／托育未確認 ${symptoms.teacher.unknown} 項`};
+        if(!criteriaComplete)return{positive:false,complete:false,threshold,thresholdCount,label:'核心症狀已逐項完成；其他評估條件尚未逐項確認'};
+        return{positive:false,complete:true,threshold,thresholdCount,label:'核心症狀與其他評估條件已完成客觀記錄；本頁不自動產生診斷'}
     }
 
     function updateSpecialtyAge(){
@@ -932,13 +991,11 @@
         setStatus($('asd-age-status'),age==null?'等待年齡':mchat?'M-CHAT 適用':'臨床準則路徑',age==null?'':mchat?'success':'warn');$('asd-age-guidance').textContent=age==null?'先完成主頁日期。':mchat?'實足月齡 16–30 個月，可搭配正式 M-CHAT-R/F 與臨床準則。':'此年齡不強迫 M-CHAT，依臨床準則及適齡正式診斷工具評估。';
         setStatus($('adhd-age-status'),age==null?'等待年齡':adhdEligible?(age<72?'學齡前審慎解讀':'可進行跨情境評估'):'本流程不適齡',age==null?'':!adhdEligible?'danger':age<72?'warn':'success');$('adhd-age-guidance').textContent=age==null?'先完成主頁日期。':adhdEligible?(age<72?'4–5 歲須特別確認發展適切性，優先考慮家長訓練與環境介入。':age>=204?'需取得親師跨情境資料；17 歲以上每症狀向度使用 5 項門檻。':'需取得親師跨情境資料；每症狀向度使用 6 項門檻。'):age>=216?'已滿 18 歲，本頁不產生 ADHD 結論，請改用成人評估流程。':'未滿 4 歲不使用本頁產生 ADHD 結論。';
         $('mchat-status').disabled=!mchat;if(!mchat){$('mchat-status').value='untested';$('mchat-score').value='';$('mchat-followup').value=''}
-        ['parent-status','teacher-status'].forEach(id=>{$(id).disabled=!adhdEligible;if(!adhdEligible)$(id).value='untested'});qsa('#adhd-criteria-list select').forEach(el=>{el.disabled=!adhdEligible;if(!adhdEligible)el.value='unknown'});updateRater('parent');updateRater('teacher');updateSpecialtyResults();
+        qsa('[data-adhd-rating]').forEach(el=>{el.disabled=!adhdEligible});qsa('#adhd-criteria-list select').forEach(el=>{el.disabled=!adhdEligible});updateSpecialtyResults();
     }
-    function updateSpecialtyResults(){const m=mchatResult(),c=asdClinicalResult(),mBox=$('mchat-result');mBox.className='callout'+(m.positive?' danger':m.complete?' success':' warn');mBox.textContent=m.label;const aBox=$('asd-result');aBox.className='callout'+((m.positive||c.positive)?' danger':(m.complete&&c.complete)?' success':' warn');aBox.textContent=m.positive||c.positive?'目前呈現 ASD 正式進一步診斷關注型態；不由本頁單獨確診。':!m.complete||!c.complete?'ASD 疑慮評估尚未完成。':'目前未達本頁關注門檻；若臨床疑慮持續仍應正式評估。';const a=adhdResult(),dBox=$('adhd-result');dBox.className='callout'+(a.positive?' danger':a.complete?' success':' warn');dBox.textContent=a.label+(a.positive?'；仍需由合格臨床人員整合診斷。':'。');updateAll()}
+    function updateSpecialtyResults(){updateAdhdSummary();const m=mchatResult(),c=asdClinicalResult(),mBox=$('mchat-result');mBox.className='callout'+(m.positive?' danger':m.complete?' success':' warn');mBox.textContent=m.label;const aBox=$('asd-result');aBox.className='callout'+((m.positive||c.positive)?' danger':(m.complete&&c.complete)?' success':' warn');aBox.textContent=m.positive||c.positive?'目前呈現 ASD 正式進一步診斷關注型態；不由本頁單獨確診。':!m.complete||!c.complete?'ASD 疑慮評估尚未完成。':'目前未達本頁關注門檻；若臨床疑慮持續仍應正式評估。';const a=adhdResult(),dBox=$('adhd-result');dBox.className='callout'+(a.complete?' success':' warn');dBox.textContent=`${a.label}。`;updateAll()}
 
     function updateMchatControls(){const on=value('mchat-status')==='completed'&&!$('mchat-status').disabled;$('mchat-score').disabled=!on;const s=Number(value('mchat-score')),follow=on&&Number.isInteger(s)&&s>=3&&s<=7;$('mchat-followup').disabled=!follow;if(!follow)$('mchat-followup').value='';updateSpecialtyResults();markStale()}
-    function updateRater(prefix){const status=$(`${prefix}-status`),on=!status.disabled&&status.value==='completed';[`${prefix}-inattention`,`${prefix}-hyper`].forEach(id=>{$(id).disabled=!on;if(!on)$(id).value=''})}
-
     function getExamDetails(item){
         if(item.result!=='abnormal')return'';
         if(item.id==='tone'){const core=[value('tone-type'),value('tone-distribution'),value('tone-impact')].filter(Boolean),rows=state.rows.mas.filter(r=>r.side||r.muscle||r.grade).map(r=>`${r.side||''}${r.muscle||''} MAS ${r.grade||'?'}${r.r1!==undefined&&r.r1!==''?`, R1 ${r.r1}°`:''}${r.r2!==undefined&&r.r2!==''?`, R2 ${r.r2}°`:''}`);return[...core,...rows].join('；')}
@@ -1004,6 +1061,8 @@
         const addPending=(text,step)=>pending.push({text,step});
         if(!state.age)addPending('年齡尚未確認','session');
         if(!focus.source)addPending('本次來源／任務尚未選擇','session');
+        if(!focus.entry)addPending('進入診間方式尚未記錄','session');
+        if(!focus.mood)addPending('情緒與專注力尚未記錄','session');
         if(!focus.concerns.length)addPending('主要關注面向尚未確認','session');
         if(state.age&&!careComplete())addPending('近期照護情形尚未完成','development');
         dev.filter(x=>!x.complete).forEach(x=>addPending(`國健署量表：${x.label}尚有 ${x.items.filter(i=>i.result==='unassessed').length} 題未評`,'development'));
@@ -1068,38 +1127,57 @@
         if(f.activity)lines.push(`Activity limitation (ICF): ${f.activity}.`);if(f.participation)lines.push(`Participation restriction (ICF): ${f.participation}.`);if(f.environment)lines.push(`Environmental factors (ICF): ${f.environment}.`);
         return lines.join('\n');
     }
-    const resultStatusLabel={pass:'達標',fail:'未達標'};
     const examStatusLabel={normal:'正常',abnormal:'異常',untestable:'無法測得'};
-    const objectiveDomainLabel={gross:'Gross motor',fine:'Fine motor',cognitive_language:'Cognitive & language',cognitive_language_social:'Cognitive, language & social',social:'Social interaction'};
     const objectiveExamStatus={normal:'normal',abnormal:'abnormal',untestable:'not testable due to limited cooperation'};
+    const LEGACY_REPORT_DOMAINS=[
+        {id:'gross',english:'Gross motor',chinese:'粗大動作'},
+        {id:'fine',english:'Fine motor',chinese:'精細動作'},
+        {id:'speech',english:'Speech & language',chinese:'語言'},
+        {id:'social',english:'Social interaction',chinese:'情緒互動及日常生活'}
+    ];
+    function legacyDomainForItem(item){
+        if(item.domainId==='gross'||item.domainId==='fine'||item.domainId==='social')return item.domainId;
+        if(item.domainId==='cognitive_language')return'speech';
+        if(item.domainId==='cognitive_language_social'){
+            const code=String(item.category||'');
+            if(code.includes('F'))return'fine';
+            if(code.includes('L'))return'speech';
+            if(code.includes('S'))return'social';
+        }
+        return'speech';
+    }
+    function legacyReportDomains(dev){const buckets=Object.fromEntries(LEGACY_REPORT_DOMAINS.map(x=>[x.id,[]]));dev.flatMap(x=>x.items).filter(x=>x.result==='pass'||x.result==='fail').forEach(item=>buckets[legacyDomainForItem(item)].push(item));return LEGACY_REPORT_DOMAINS.map(domain=>({...domain,items:buckets[domain.id]})).filter(domain=>domain.items.length)}
+    const legacyItemText=item=>stripMarker(item.question).replace(/[？?]\s*$/,'').trim();
+    const legacyAgeText=age=>age?(age.years?`${age.years} 歲${age.monthPart?` ${age.monthPart} 個月`:''}`:`${age.months} 個月`):'';
+    const adhdEndorsed=rater=>adhdItems().filter(item=>adhdRating(rater,item.id)==='yes');
+    const adhdKnownCount=rater=>{const stats=adhdRaterStats(rater);return stats.yes+stats.no};
     function specialtyObjectiveLines(){
         const lines=[];
         if($('asd-concern').checked){const c=asdClinicalResult(),mParts=[];if(value('mchat-status')==='completed'&&value('mchat-score')!==''){mParts.push(`初篩總分 ${value('mchat-score')}/20`);if(value('mchat-followup')!=='')mParts.push(`Follow-Up 後陽性題數 ${value('mchat-followup')}/7`)}if(mParts.length)lines.push(`ASD 客觀資料：M-CHAT-R/F ${mParts.join('；')}`);const vals=ASD_CRITERIA.map(x=>value(`asdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ASD 客觀資料：臨床準則已記錄 ${known.length} 項（是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項）${c.complete?`；A 類 ${c.a}/3 項、B 類 ${c.b}/4 項`:''}`)}
-        if($('adhd-concern').checked){const rater=[];if(value('parent-status')==='completed')rater.push(`家長量表注意力不足 ${value('parent-inattention')}/9、過動衝動 ${value('parent-hyper')}/9`);if(value('teacher-status')==='completed')rater.push(`教師量表注意力不足 ${value('teacher-inattention')}/9、過動衝動 ${value('teacher-hyper')}/9`);if(rater.length)lines.push(`ADHD 客觀資料：${rater.join('；')}`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ADHD 客觀資料：其他條件已記錄 ${known.length} 項（是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項）`)}
+        if($('adhd-concern').checked){const data=adhdSymptomData();ADHD_RATERS.forEach(([rater,label])=>{if(!adhdKnownCount(rater))return;const stats=data[rater],endorsed=adhdEndorsed(rater);lines.push(`ADHD 核心症狀逐項紀錄（${label}）：注意力不足 ${stats.groups.inattention.yes}/9 項、過動／衝動 ${stats.groups.hyperactive.yes}/9 項，未確認 ${stats.unknown}/18 項`);if(endorsed.length)lines.push(`${label}記錄為「是」的症狀：${endorsed.map(x=>`${x.id.toUpperCase()}「${x.label}」`).join('、')}`)});if(adhdKnownCount('parent')&&adhdKnownCount('teacher'))lines.push(`ADHD 跨情境紀錄：雙方皆為「是」${data.bothYes.length} 項、僅家長為「是」${data.parentOnly.length} 項、僅教師／托育為「是」${data.teacherOnly.length} 項，尚有 ${data.incompletePairs.length} 項未完成雙方核對`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ADHD 其他評估條件已記錄 ${known.length} 項（是 ${vals.filter(x=>x==='yes').length} 項、否 ${vals.filter(x=>x==='no').length} 項）`)}
         return lines;
     }
     function specialtyObjectiveLinesEnglish(){
         const lines=[];
         if($('asd-concern').checked){if(value('mchat-status')==='completed'&&value('mchat-score')!==''){let text=`M-CHAT-R/F initial score ${value('mchat-score')}/20`;if(value('mchat-followup')!=='')text+=`; Follow-Up positive items ${value('mchat-followup')}/7`;lines.push(text+'.')}const c=asdClinicalResult(),vals=ASD_CRITERIA.map(x=>value(`asdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`ASD clinical criteria recorded: ${vals.filter(x=>x==='yes').length} yes and ${vals.filter(x=>x==='no').length} no${c.complete?`; category A ${c.a}/3 and category B ${c.b}/4`:''}.`)}
-        if($('adhd-concern').checked){if(value('parent-status')==='completed')lines.push(`Parent ADHD rating: inattention ${value('parent-inattention')}/9; hyperactivity/impulsivity ${value('parent-hyper')}/9.`);if(value('teacher-status')==='completed')lines.push(`Teacher ADHD rating: inattention ${value('teacher-inattention')}/9; hyperactivity/impulsivity ${value('teacher-hyper')}/9.`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`Additional ADHD conditions recorded: ${vals.filter(x=>x==='yes').length} yes and ${vals.filter(x=>x==='no').length} no.`)}
+        if($('adhd-concern').checked){const data=adhdSymptomData();[['parent','Parent'],['teacher','Teacher/childcare']].forEach(([rater,label])=>{if(!adhdKnownCount(rater))return;const stats=data[rater],endorsed=adhdEndorsed(rater);lines.push(`${label} ADHD symptom record: inattention ${stats.groups.inattention.yes}/9; hyperactivity/impulsivity ${stats.groups.hyperactive.yes}/9; ${stats.unknown}/18 unconfirmed.`);if(endorsed.length)lines.push(`${label}-endorsed symptoms: ${endorsed.map(x=>`${x.id.toUpperCase()} ${x.label}`).join('; ')}.`)});if(adhdKnownCount('parent')&&adhdKnownCount('teacher'))lines.push(`Cross-setting ADHD symptom record: ${data.bothYes.length} endorsed by both sources; ${data.parentOnly.length} parent only; ${data.teacherOnly.length} teacher/childcare only; ${data.incompletePairs.length} not confirmed by both sources.`);const vals=ADHD_CRITERIA.map(x=>value(`adhdcrit-${x.id}`)),known=vals.filter(x=>x==='yes'||x==='no');if(known.length)lines.push(`Additional ADHD assessment conditions recorded: ${vals.filter(x=>x==='yes').length} yes and ${vals.filter(x=>x==='no').length} no.`)}
         return lines;
     }
     function buildObjective(){
-        const form=currentHpaForm(),dev=getDev(),exam=getExam().filter(x=>x.result!=='unassessed'),caseLabel=(value('case-label')||'').trim(),lines=['O:'];
-        lines.push(`Assessment date: ${value('assessment-date')||today()}${caseLabel?` | Case: ${caseLabel}`:''}.`);if(state.age)lines.push(`Age: ${ageEnglish(state.age.chronological)}${state.age.usingCorrected?` (corrected age ${ageEnglish(state.age.corrected)})`:''}.`);if(value('informant'))lines.push(`Informant: ${value('informant')}.`);
-        const assessedDomains=form?dev.map(d=>({...d,assessed:d.items.filter(x=>x.result==='pass'||x.result==='fail')})).filter(d=>d.assessed.length):[];
-        if(assessedDomains.length){lines.push('',`HPA developmental screening (${hpaBandEnglish(form)}):`);assessedDomains.forEach(d=>{lines.push(`${objectiveDomainLabel[d.id]||d.label}:`);d.assessed.forEach(x=>lines.push(`  ${x.category}${x.n} ${stripMarker(x.question)}: (${x.result==='pass'?'O / achieved':'X / not achieved'})`));lines.push('')})}
+        const domains=legacyReportDomains(getDev()),exam=getExam().filter(x=>x.result!=='unassessed'),lines=['O:'];
+        if(value('entry-method'))lines.push(`Entry: ${value('entry-method')}`);if(value('emotion-state'))lines.push(`Mood/Attention: ${value('emotion-state')}`);if(value('entry-method')||value('emotion-state'))lines.push('');
+        domains.forEach(domain=>{lines.push(`${domain.english}:`);domain.items.filter(x=>x.result==='pass').forEach(x=>lines.push(`  ${legacyItemText(x)}:(O)`));domain.items.filter(x=>x.result==='fail').forEach(x=>lines.push(`  ${legacyItemText(x)}:(X)`));lines.push('')});
         if(exam.length){lines.push('Physiatric examination:');exam.forEach(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';lines.push(`  ${examEnglishLabel[x.id]||x.label}: ${objectiveExamStatus[x.result]}${detail?`; details: ${detail}`:''}.`)});lines.push('')}
         const specialty=specialtyObjectiveLinesEnglish();if(specialty.length){lines.push('ASD/ADHD objective data:');specialty.forEach(x=>lines.push(`  ${x}`))}
         return lines.join('\n').replace(/\n{3,}/g,'\n\n').trim();
     }
     function buildSubreport(){
-        const form=currentHpaForm(),dev=getDev(),exam=getExam().filter(x=>x.result!=='unassessed'),caseLabel=(value('case-label')||'').trim(),parts=[];
-        const meta=[`個案於${value('assessment-date')||today()}接受評估`];if(caseLabel)meta.push(`個案代號為${caseLabel}`);if(state.age)meta.push(`實足年齡${ageText(state.age.chronological)}${state.age.usingCorrected?`，矯正年齡${ageText(state.age.corrected)}`:''}`);if(value('informant'))meta.push(`資料來源為${value('informant')}`);parts.push(`${meta.join('，')}。`);
-        const domainParts=form?dev.map(d=>{const assessed=d.items.filter(x=>x.result==='pass'||x.result==='fail');if(!assessed.length)return'';const passed=assessed.filter(x=>x.result==='pass'),failed=assessed.filter(x=>x.result==='fail'),sentences=[];if(passed.length)sentences.push(`已達標項目為${passed.map(x=>`${x.category}${x.n}「${stripMarker(x.question)}」`).join('、')}`);if(failed.length)sentences.push(`未達標項目為${failed.map(x=>`${x.category}${x.n}「${stripMarker(x.question)}」`).join('、')}`);return`${d.label}方面：${sentences.join('；')}。`}).filter(Boolean):[];if(domainParts.length)parts.push(`國健署${form.label}發展篩檢結果：${domainParts.join('')}`);
+        const domains=legacyReportDomains(getDev()),exam=getExam().filter(x=>x.result!=='unassessed'),parts=[],age=state.age?legacyAgeText(state.age.chronological):'';
+        const intro=[];if(age)intro.push(`該名 ${age}孩童今日${value('entry-method')||'接受評估'}`);else intro.push(`該名孩童今日${value('entry-method')||'接受評估'}`);if(value('emotion-state'))intro.push(`評估過程中${value('emotion-state')}`);parts.push(`${intro.join('，')}。`);
+        domains.forEach(domain=>{const passed=domain.items.filter(x=>x.result==='pass').map(x=>`達成「${legacyItemText(x)}」`),failed=domain.items.filter(x=>x.result==='fail').map(x=>`尚未達成「${legacyItemText(x)}」`),sentences=[];if(passed.length)sentences.push(`目前可${passed.join('、')}`);if(failed.length)sentences.push(`目前${failed.join('、')}`);parts.push(`${domain.chinese}方面：${sentences.join('；')}。`)});
         if(exam.length){const examParts=exam.map(x=>{const detail=x.result==='abnormal'?getExamDetails(x):'';return`${x.label}${examStatusLabel[x.result]}${detail?`（${detail}）`:''}`});parts.push(`復健專科理學檢查客觀紀錄：${examParts.join('；')}。`)}
-        const specialty=specialtyObjectiveLines();if(specialty.length)parts.push(`${specialty.join('；')}。`);
-        return parts.join('\n\n');
+        const specialty=specialtyObjectiveLines();specialty.forEach(line=>parts.push(`${line}。`));
+        return parts.join('\n');
     }
 
     const OUTPUT_BLOCKS=[['objective','objective-output'],['subreport','subreport-output']];
@@ -1122,7 +1200,7 @@
     function closeSpecialty(){qsa('.specialty-page').forEach(x=>x.classList.add('hidden'));qsa('.main-workflow').forEach(x=>x.classList.remove('hidden'));window.scrollTo(0,document.body.dataset.returnScroll?Number(document.body.dataset.returnScroll):0)}
 
     function bind(){
-        $('assessment-date').value=today();['birth-date','assessment-date','gestational-weeks','gestational-days'].forEach(id=>$(id).addEventListener('change',updateAge));$('use-corrected-age').addEventListener('change',()=>{state.correctionTouched=true;updateAge()});$('informant').addEventListener('change',markStale);
+        $('assessment-date').value=today();['birth-date','assessment-date','gestational-weeks','gestational-days'].forEach(id=>$(id).addEventListener('change',updateAge));$('use-corrected-age').addEventListener('change',()=>{state.correctionTouched=true;updateAge()});['informant','entry-method','emotion-state'].forEach(id=>$(id).addEventListener('change',()=>{markStale();updateAll()}));
         ['referral-source','clinical-course','chief-concern'].forEach(id=>$(id).addEventListener(id==='chief-concern'?'input':'change',()=>{markStale();updateAll()}));
         qsa('[data-clinical-concern],[data-clinical-none],input[name^="redflag-"]').forEach(el=>el.addEventListener('change',()=>{if(el.dataset.clinicalNone!==undefined&&el.checked)qsa('[data-clinical-concern]').forEach(x=>x.checked=false);if(el.dataset.clinicalConcern!==undefined&&el.checked)$('concern-none').checked=false;markStale();updateAll()}));
         $('export-case').addEventListener('click',exportCase);$('import-case').addEventListener('click',()=>$('import-case-file').click());$('import-case-file').addEventListener('change',e=>importCaseFile(e.target.files?.[0]));
@@ -1130,7 +1208,7 @@
         qsa('input[name="care-feeding"],input[name="care-delay"],input[name="care-attention"],[data-care-delay]').forEach(el=>el.addEventListener('change',()=>{const care=getCare();$('care-feeding-note').classList.toggle('hidden',care.feeding!=='yes');$('care-delay-detail').classList.toggle('hidden',care.delay!=='yes');$('care-attention-note').classList.toggle('hidden',care.attention!=='yes');if(care.delay!=='yes')qsa('[data-care-delay]').forEach(x=>x.checked=false);markStale();syncExamTriggers();updateAll()}));
         document.addEventListener('click',e=>{const add=e.target.closest('[data-add]'),remove=e.target.closest('[data-remove]');if(add)addStructuredRow(add.dataset.add);if(remove){state.rows[remove.dataset.remove].splice(Number(remove.dataset.i),1);renderStructuredRows(remove.dataset.remove);markStale();updateAll()}});document.addEventListener('input',e=>{if(e.target.dataset.row){state.rows[e.target.dataset.row][Number(e.target.dataset.i)][e.target.dataset.key]=e.target.value;markStale();updateAll()}});
         ['asd','adhd'].forEach(type=>{const check=$(`${type}-concern`),button=$(`open-${type}`),card=$(`${type}-concern-card`);check.addEventListener('change',()=>{button.disabled=!check.checked;card.classList.toggle('active',check.checked);markStale();updateSpecialtyResults();updateAll()});button.addEventListener('click',()=>{document.body.dataset.returnScroll=String(window.scrollY);openSpecialty(type)})});qsa('.back-main').forEach(b=>b.addEventListener('click',closeSpecialty));
-        $('mchat-status').addEventListener('change',updateMchatControls);['mchat-score','mchat-followup'].forEach(id=>$(id).addEventListener('input',updateMchatControls));['parent-status','teacher-status'].forEach(id=>$(id).addEventListener('change',()=>{updateRater(id.split('-')[0]);updateSpecialtyResults();markStale()}));['parent-inattention','parent-hyper','teacher-inattention','teacher-hyper'].forEach(id=>$(id).addEventListener('input',()=>{updateSpecialtyResults();markStale()}));
+        $('mchat-status').addEventListener('change',updateMchatControls);['mchat-score','mchat-followup'].forEach(id=>$(id).addEventListener('input',updateMchatControls));qsa('[data-adhd-rating]').forEach(el=>el.addEventListener('change',()=>{updateSpecialtyResults();markStale()}));
         $('generate-outputs').addEventListener('click',generateOutputs);qsa('.copy-output').forEach(b=>b.addEventListener('click',()=>copyOutput(b.dataset.copy)));qsa('.output-regenerate').forEach(b=>b.addEventListener('click',()=>regenerateOutput(b.dataset.regenerate)));$('close-figure').addEventListener('click',()=>$('figure-dialog').close());$('new-case').addEventListener('click',()=>{if(confirm('開始新個案會清除目前分頁所有資料，確定繼續？')){try{sessionStorage.removeItem(SAVE_KEY)}catch(_){}location.reload()}});
         $('case-label').addEventListener('input',markStale);
         OUTPUT_BLOCKS.forEach(([key,id])=>$(id).addEventListener('input',()=>{state.outputEdited[key]=true;refreshOutputControls();saveState()}));
@@ -1140,7 +1218,7 @@
         window.addEventListener('beforeunload',e=>{const hasData=!!value('birth-date')||Object.values(state.hpaResponses).some(r=>r&&r.result&&r.result!=='unassessed');if(!hasData||state.outputsFresh)return;e.preventDefault();e.returnValue=''});
     }
 
-    renderDevelopment();renderExam();renderRecommendations();renderCriteria('asd-criteria-list',ASD_CRITERIA,'asdcrit');renderCriteria('adhd-criteria-list',ADHD_CRITERIA,'adhdcrit');bind();updateAge();updateRater('parent');updateRater('teacher');updateSpecialtyResults();updateAll();refreshOutputControls();updateOutputStatus();
+    renderDevelopment();renderExam();renderRecommendations();renderCriteria('asd-criteria-list',ASD_CRITERIA,'asdcrit');renderCriteria('adhd-criteria-list',ADHD_CRITERIA,'adhdcrit');renderAdhdSymptoms();bind();updateAge();updateSpecialtyResults();updateAll();refreshOutputControls();updateOutputStatus();
     if(restoreState())$('restore-note').classList.remove('hidden');
     </script>
 
